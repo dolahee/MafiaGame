@@ -1,7 +1,7 @@
 import { Box, Grid, Paper } from '@mui/material';
 import React, { useEffect, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router';
+import { Navigate } from 'react-router';
 import { socket } from '../../utils/socket';
 import useSocket from '../../hooks/useSocket';
 import useStream from '../../hooks/useStream';
@@ -13,7 +13,7 @@ import ButtonGroup from '../../components/gamepage/ButtonGroup';
 
 export default function GamePage() {
   useSocket();
-  const navigate = useNavigate();
+
   const { peerList, stream } = useStream();
   const { gameStatus } = useSelector((state) => state.status);
   const { userList, myJob } = useSelector((state) => state.room);

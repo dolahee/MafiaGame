@@ -27,22 +27,10 @@ const useSocket = () => {
   const { state: roomID } = useLocation();
 
   useEffect(() => {
-    // 채팅방 입장
-    // socket.emit('join room', roomID);
-
     socket.emit('join room', { roomID, myEmail: '' });
-    dispatch(setSocketId(socket.id));
-
-    // socket.on('noticeLB', (data) => {
-    //   lobbyChatBox.current.insertAdjacentHTML(
-    //     'beforeend',
-    //     `<div class='chatNotice'>${data.msg}</div>`
-    //   );
-    // });
-
-    // Realtime User Notice
-
     socket.on('notice', (data) => {
+      console.log('입장', data);
+      dispatch(setSocketId(socket.id));
       const outMessgae = '님이 방을 나갔습니다.';
       if (data.msg.includes(outMessgae)) {
         const outUser = data.msg.replace(outMessgae, '');
@@ -118,10 +106,6 @@ const useSocket = () => {
       }
     });
 
-    socket.on('mafiaPick', (data) => {
-      dispatch(setMafiaPickId(data));
-    });
-
     socket.on('gameEnd', () => {
       dispatch(resetRoomState());
       dispatch(resetStatusState());
@@ -136,6 +120,16 @@ const useSocket = () => {
       dispatch(setJobList(data.jobList, job));
     });
   }, [userList, dispatch]);
+
+  useEffect(() => {
+    socket.on('mafiaPick', (data) => {
+      console.log('마피아 선택', data);
+      dispatch(setMafiaPickId(data));
+    });
+    return () => {
+      socket.removeListener('mafiaPick');
+    };
+  }, [dispatch]);
 
   return {};
 };

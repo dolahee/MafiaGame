@@ -1,7 +1,21 @@
 import React from 'react';
-import { Box, Grid, Paper, Typography } from '@mui/material';
+import { Box, Button, Grid, Paper, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { socket } from '../../utils/socket';
 
 export default function ProfileCard({ userId }) {
+  const { timeStatus } = useSelector((state) => state.status);
+  const { mySocketId, myJob, killedUserList, mafiaPickId } = useSelector(
+    (state) => state.room
+  );
+
+  const onClickKill = () => {
+    if (myJob === 'mafia' && timeStatus === 'night') {
+      socket.emit('mafiaVoted', { killed_id: userId, from_id: mySocketId });
+      console.log(mySocketId);
+    }
+  };
+
   return (
     <Grid
       container
@@ -35,6 +49,41 @@ export default function ProfileCard({ userId }) {
               }}
             />
           </Box>
+          {userId === mafiaPickId && myJob === 'mafia' ? (
+            <img
+              src="./images/killimg.png"
+              alt="killimg"
+              style={{
+                position: 'absolute',
+                width: '100px',
+                height: '100px',
+              }}
+            />
+          ) : null}
+
+          {killedUserList.includes(userId) ? (
+            <Box
+              sx={{
+                position: 'absolute',
+                width: '100px',
+                height: '100px',
+                backgroundColor: '#171717',
+                borderRadius: '10px',
+              }}
+            >
+              <img
+                src="./images/killimg.png"
+                alt="killimg"
+                style={{
+                  position: 'absolute',
+                  width: '100px',
+                  height: '100px',
+                  backgroundColor: '#171717',
+                  borderRadius: '10px',
+                }}
+              />
+            </Box>
+          ) : null}
           <Box pl={1}>
             <Box
               sx={{
@@ -43,11 +92,13 @@ export default function ProfileCard({ userId }) {
                 width: '150px',
                 display: 'flex',
                 justifyContent: 'center',
+                border: userId === mySocketId ? `2px solid red` : undefined,
               }}
             >
               <Typography variant="h7">{userId}</Typography>
             </Box>
           </Box>
+          <Button onClick={onClickKill}>선택</Button>
         </Paper>
       </Grid>
     </Grid>
