@@ -46,6 +46,40 @@ export default function ProfileCard({ userId }) {
               borderRadius: '3px',
             }}
           >
+            {killedUserList.includes(userId) ? (
+              <Box
+                sx={{
+                  width: '100px',
+                  height: '100px',
+                  backgroundColor: '#171717',
+                  borderRadius: '10px',
+                }}
+              >
+                <img
+                  src="./images/killimg.png"
+                  alt="killimg"
+                  style={{
+                    width: '100px',
+                    height: '100px',
+                    backgroundColor: '#171717',
+                    borderRadius: '10px',
+                  }}
+                />
+              </Box>
+            ) : null}
+            {userId === mafiaPickId &&
+            myJob === 'mafia' &&
+            timeStatus === 'night' ? (
+              <img
+                src="./images/killimg.png"
+                alt="killimg"
+                style={{
+                  width: '100px',
+                  height: '100px',
+                }}
+              />
+            ) : null}
+
             <img
               src="/images/RandomImg/img1.png"
               alt="killimg"
@@ -55,41 +89,7 @@ export default function ProfileCard({ userId }) {
               }}
             />
           </Box>
-          {userId === mafiaPickId && myJob === 'mafia' ? (
-            <img
-              src="./images/killimg.png"
-              alt="killimg"
-              style={{
-                position: 'absolute',
-                width: '100px',
-                height: '100px',
-              }}
-            />
-          ) : null}
 
-          {killedUserList.includes(userId) ? (
-            <Box
-              sx={{
-                position: 'absolute',
-                width: '100px',
-                height: '100px',
-                backgroundColor: '#171717',
-                borderRadius: '10px',
-              }}
-            >
-              <img
-                src="./images/killimg.png"
-                alt="killimg"
-                style={{
-                  position: 'absolute',
-                  width: '100px',
-                  height: '100px',
-                  backgroundColor: '#171717',
-                  borderRadius: '10px',
-                }}
-              />
-            </Box>
-          ) : null}
           <Box pl={1}>
             <Box
               sx={{
