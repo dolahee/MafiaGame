@@ -2,13 +2,13 @@ module.exports = [
   {
     /** 밤 시간 */
     type: 'night',
-    ms: 30 * 1000,
+    ms: 10 * 1000,
     noticeMessage: '밤이 되었습니다',
   },
   {
     /** 낮 토론 시간 */
     type: 'dayDiscussion',
-    ms: 90 * 1000,
+    ms: 10 * 1000,
     noticeMessage: '낮이 되었습니다. 시민은 마피아를 색출하세요',
   },
   {

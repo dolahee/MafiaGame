@@ -5,15 +5,21 @@ import { socket } from '../../utils/socket';
 
 export default function ProfileCard({ userId }) {
   const { timeStatus } = useSelector((state) => state.status);
-  const { mySocketId, myJob, killedUserList, mafiaPickId } = useSelector(
-    (state) => state.room
-  );
+  const { mySocketId, myJob, killedUserList, mafiaPickId, userList } =
+    useSelector((state) => state.room);
 
   const onClickKill = () => {
     if (myJob === 'mafia' && timeStatus === 'night') {
       socket.emit('mafiaVoted', { killed_id: userId, from_id: mySocketId });
       console.log(mySocketId);
     }
+  };
+
+  const onClickVote = () => {
+    socket.emit('peopleVoted', {
+      from_id: mySocketId,
+      killed_id: userId,
+    });
   };
 
   return (
@@ -98,7 +104,12 @@ export default function ProfileCard({ userId }) {
               <Typography variant="h7">{userId}</Typography>
             </Box>
           </Box>
-          <Button onClick={onClickKill}>선택</Button>
+          {myJob === 'mafia' && timeStatus === 'night' ? (
+            <Button onClick={onClickKill}>선택</Button>
+          ) : null}
+          {timeStatus === 'dayVote' ? (
+            <Button onClick={onClickVote}> 투표 </Button>
+          ) : null}
         </Paper>
       </Grid>
     </Grid>

@@ -1,5 +1,5 @@
 import { Box, Button } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { socket } from '../../utils/socket';
 import '../styles/Chatting.css';
@@ -17,6 +17,7 @@ export default function Chatting() {
   const { messages } = useSelector((state) => state.message);
   const changeToDM = () => setIsDM(!isDM);
   const [timer, setTimer] = useState(0);
+  const boxRef = useRef();
 
   useEffect(() => {
     socket.on('timerChange', ({ ms }) => {
@@ -27,6 +28,13 @@ export default function Chatting() {
   useEffect(() => {
     setOnly(!userList.filter((e) => e !== '').length > 1);
   }, [userList]);
+
+  useEffect(() => {
+    boxRef.current.scrollTo({
+      behavior: 'smooth',
+      top: boxRef.current.scrollHeight,
+    });
+  }, [messages]);
 
   return (
     <>
@@ -57,6 +65,7 @@ export default function Chatting() {
           fontFamily: 'MaplestoryOTFBold',
           zIndex: 10000,
         }}
+        ref={boxRef}
       >
         <Box>
           {messages.map((message) => (
