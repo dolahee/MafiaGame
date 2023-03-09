@@ -1,6 +1,7 @@
 import { Box, Grid, Paper } from '@mui/material';
 import React, { useEffect, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Navigate, useNavigate } from 'react-router';
 import { socket } from '../../utils/socket';
 import useSocket from '../../hooks/useSocket';
 import useStream from '../../hooks/useStream';
@@ -12,11 +13,19 @@ import ButtonGroup from '../../components/gamepage/ButtonGroup';
 
 export default function GamePage() {
   useSocket();
+  const navigate = useNavigate();
   const { peerList, stream } = useStream();
   const { gameStatus } = useSelector((state) => state.status);
   const { userList, myJob } = useSelector((state) => state.room);
   const [showMafiaCard, setShowMafiaCard] = useState(false);
   const [showCitizencardCard, setShowCitizencardCard] = useState(false);
+
+  useEffect(() => {
+    socket.on('room full', () => {
+      Navigate('/Main');
+      alert('This rooom is not available');
+    });
+  }, []);
 
   useEffect(() => {
     if (myJob === 'mafia') {
@@ -48,7 +57,7 @@ export default function GamePage() {
       alignItems="center"
     >
       <Grid item md={4}>
-        <Paper sx={{ height: '100vh' }}>
+        <Paper sx={{ height: '100vh', overflow: 'auto' }}>
           {userList.map((user, index) =>
             index <= 9 ? (
               <Box mb={1} key={index}>

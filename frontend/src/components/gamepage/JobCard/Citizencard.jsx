@@ -1,10 +1,12 @@
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import React from 'react';
 
 export default function Citizencard({ onClose }) {
   return (
     <Box sx={{ position: 'absolute', top: 140 }}>
-      <img src="./images/citizencard.png" alt="mafiacard" onClick={onClose} />
+      <Button onClick={onClose}>
+        <img src="./images/citizencard.png" alt="mafiacard" />
+      </Button>
     </Box>
   );
 }

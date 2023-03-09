@@ -9,6 +9,7 @@ import {
   addKilledUser,
   setMafiaPickId,
   resetRoomState,
+  setSocketId,
 } from '../store/modules/room';
 import { addMessage } from '../store/modules/message';
 import {
@@ -18,11 +19,6 @@ import {
   resetStatusState,
 } from '../store/modules/status';
 import { setUsersInfo } from '../store/modules/userInfo';
-
-const videoConstraints = {
-  height: 200,
-  width: 200,
-};
 
 const useSocket = () => {
   const dispatch = useDispatch();
@@ -34,14 +30,18 @@ const useSocket = () => {
     // 채팅방 입장
     // socket.emit('join room', roomID);
 
+    socket.emit('join room', { roomID, myEmail: '' });
+    dispatch(setSocketId(socket.id));
+
     // socket.on('noticeLB', (data) => {
     //   lobbyChatBox.current.insertAdjacentHTML(
     //     'beforeend',
     //     `<div class='chatNotice'>${data.msg}</div>`
     //   );
-    // })
+    // });
 
     // Realtime User Notice
+
     socket.on('notice', (data) => {
       const outMessgae = '님이 방을 나갔습니다.';
       if (data.msg.includes(outMessgae)) {

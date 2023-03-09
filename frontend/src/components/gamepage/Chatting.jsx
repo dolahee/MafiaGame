@@ -25,9 +25,7 @@ export default function Chatting() {
   }, []);
 
   useEffect(() => {
-    userList.filter((e) => e !== '').length > 1
-      ? setOnly(false)
-      : setOnly(true);
+    setOnly(!userList.filter((e) => e !== '').length > 1);
   }, [userList]);
 
   return (

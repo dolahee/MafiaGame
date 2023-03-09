@@ -3,7 +3,7 @@ const initState = {
   roomID: '',
   /** 유저 목록 */
   userList: ['', '', '', '', '', '', '', ''],
-  /**유저 nickname 목록 */
+  /** 유저 nickname 목록 */
   nameInRoom: [],
   /** 직업 목록 mafia 마피아 */
   jobList: [],
@@ -42,7 +42,7 @@ export const getRoomID = (roomID) => ({ type: GET_ROOM_ID, payload: roomID });
 
 /** 유저 목록 저장 함수
  * @param {string[]} userList 유저 목록 */
-export const getUserList = (userList, nameInRoom) => ({
+export const getUserList = (userList) => ({
   type: GET_USER_LIST,
   payload: { userList },
 });

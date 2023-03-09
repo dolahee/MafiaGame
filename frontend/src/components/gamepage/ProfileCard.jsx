@@ -30,7 +30,6 @@ export default function ProfileCard({ userId }) {
               src="/images/RandomImg/img1.png"
               alt="killimg"
               style={{
-                position: 'absolute',
                 width: '100px',
                 height: '100px',
               }}

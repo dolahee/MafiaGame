@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router';
+import Peer from 'simple-peer';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserList, setSocketId } from '../store/modules/room';
-import Peer from 'simple-peer';
 import { socket } from '../utils/socket';
 
 function getNewPeer(stream, initiator = false) {
@@ -54,17 +54,17 @@ const useStream = () => {
   const { myEmail } = useSelector((state) => state.userInfo);
   const { state: roomID } = useLocation();
 
-  useEffect(() => {
-    (async () => {
-      const newStream = await navigator.mediaDevices.getUserMedia({
-        video: videoConstraints,
-        audio: true,
-      });
-      setStream(newStream);
-      socket.emit('join room', { roomID, myEmail });
-      dispatch(setSocketId(socket.id));
-    })();
-  }, [dispatch, roomID, myEmail]);
+  // useEffect(() => {
+  //   (async () => {
+  //     const newStream = await navigator.mediaDevices.getUserMedia({
+  //       video: videoConstraints,
+  //       audio: true,
+  //     });
+  //     setStream(newStream);
+  //     socket.emit('join room', { roomID, myEmail });
+  //     dispatch(setSocketId(socket.id));
+  //   })();
+  // }, [dispatch, roomID, myEmail]);
 
   useEffect(() => {
     if (!stream) return;
