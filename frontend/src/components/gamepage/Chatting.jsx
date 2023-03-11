@@ -59,7 +59,7 @@ export default function Chatting() {
         ref={boxRef}
       >
         {gameStatus !== 'playing' && <ButtonGroup />}
-        <Box>
+        <Box sx={{ height: '100vh' }}>
           {messages.map((message) => (
             <Message
               key={message.id}
