@@ -5,8 +5,9 @@ import { socket } from '../../utils/socket';
 
 export default function ProfileCard({ userId }) {
   const { timeStatus } = useSelector((state) => state.status);
-  const { mySocketId, myJob, killedUserList, mafiaPickId, userList } =
-    useSelector((state) => state.room);
+  const { mySocketId, myJob, killedUserList, mafiaPickId } = useSelector(
+    (state) => state.room
+  );
 
   const onClickKill = () => {
     if (myJob === 'mafia' && timeStatus === 'night') {
