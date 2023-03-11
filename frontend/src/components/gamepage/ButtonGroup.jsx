@@ -1,4 +1,12 @@
-import { Box, Button, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography,
+} from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
@@ -42,20 +50,14 @@ export default function ButtonGroup() {
     }
   };
 
-  // const gameStart = () => {
-  //   socket.emit('gameStart', {
-  //     from_id: socket.id,
-  //   });
-  // };
-
   // 버튼 클릭 시 페이지 주소가 복사 됨
   const [copy, setcopy] = useState(false);
   const inviteFriends = () => {
     navigator.clipboard.writeText(window.location.href);
     setcopy(true);
-    setTimeout(() => {
-      setcopy(false);
-    }, 3000);
+  };
+  const handleClose = () => {
+    setcopy(false);
   };
 
   socket.on('readyComplete', () => {
@@ -64,6 +66,21 @@ export default function ButtonGroup() {
 
   return (
     <Box sx={{ display: 'flex' }}>
+      {/* 주소 복사 완료 다이얼로그 */}
+      <Dialog open={copy} onClose={inviteFriends}>
+        <DialogTitle>주소 복사 완료</DialogTitle>
+        <DialogContent>
+          <Typography variant="body1">
+            친구를 초대해서 게임을 즐겨보세요.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <Box m={1}>
         <Button
           ref={readyBtn}
@@ -82,7 +99,6 @@ export default function ButtonGroup() {
         >
           {isCaptain ? 'Game START' : 'READY'}
         </Button>
-        {copy && <Typography variant="body1"> </Typography>}
       </Box>
       <Box m={1}>
         <Button
@@ -94,7 +110,6 @@ export default function ButtonGroup() {
         >
           초대하기
         </Button>
-        {copy && <Typography variant="body1">주소복사완료</Typography>}
       </Box>
       <Box m={1}>
         <Button
@@ -112,7 +127,6 @@ export default function ButtonGroup() {
         >
           나가기
         </Button>
-        {copy && <Typography variant="body1"> </Typography>}
       </Box>
     </Box>
   );

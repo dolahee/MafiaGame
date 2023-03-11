@@ -1,10 +1,12 @@
 import { Box, Button, Grid, TextField, Paper } from '@mui/material';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import NickNameData from '../NickNameData.json';
 import Rules from '../components/Rules';
 
 export default function Main() {
+  const navigate = useNavigate();
   const randomNickname =
     NickNameData.determiners[
       Math.floor(Math.random() * NickNameData.determiners.length)
@@ -60,7 +62,14 @@ export default function Main() {
                   />
                 </Box>
                 <Box>
-                  <Button fullWidth variant="contained" size="large">
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    size="large"
+                    onClick={() => {
+                      navigate('/gamepage');
+                    }}
+                  >
                     Game Start
                   </Button>
                 </Box>
