@@ -71,7 +71,7 @@ export default function GamePage() {
           )}
         </Paper>
       </Grid>
-      <Grid item md={7}>
+      <Grid item md={6}>
         <Paper sx={{ height: '100vh' }}>
           <Chatting />
           {showMafiaCard ? (
@@ -95,10 +95,8 @@ export default function GamePage() {
               <Citizencard onClose={onCloseCitizencardCard} />
             </Box>
           ) : null}
+          {gameStatus !== 'playing' && <ButtonGroup />}
         </Paper>
-      </Grid>
-      <Grid item md={1}>
-        {gameStatus !== 'playing' && <ButtonGroup />}
       </Grid>
     </Grid>
   );

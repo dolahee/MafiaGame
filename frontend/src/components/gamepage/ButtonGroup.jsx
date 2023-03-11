@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
@@ -49,58 +49,65 @@ export default function ButtonGroup() {
   //   });
   // };
 
+  // 버튼 클릭 시 페이지 주소가 복사 됨
+  const [copy, setcopy] = useState(false);
+  const inviteFriends = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setcopy(true);
+    setTimeout(() => {
+      setcopy(false);
+    }, 3000);
+  };
+
   socket.on('readyComplete', () => {
     setIsReady(false);
   });
 
   return (
-    <>
-      <GlobalStyle />
-      <Box sx={{ p: 1, textAlign: 'right' }}>
-        {/* {isCaptain ? (
-        <Button
-          ref={startBtn}
-          variant="contained"
-          sx={{ m: 1, backgroundColor: '#940404' }}
-          onClick={gameStart}
-          disabled={isReady ? true : false}
-        >
-          'Game START'
-        </Button>
-      ) : ( */}
-        <Button
-          ref={readyBtn}
-          variant="contained"
-          color="primary"
-          sx={{
-            m: 1,
+    <Box sx={{ display: 'flex' }}>
+      <Button
+        ref={readyBtn}
+        variant="contained"
+        color="primary"
+        size="large"
+        sx={{
+          m: 1,
+          fontFamily: 'MaplestoryOTFBold',
+          '* .Mui_disabled': {
+            background: '#E38989',
             fontFamily: 'MaplestoryOTFBold',
-            '* .Mui_disabled': {
-              background: '#E38989',
-              fontFamily: 'MaplestoryOTFBold',
-            },
-          }}
-          onClick={gameReady}
-          disabled={isReady}
-        >
-          {isCaptain ? 'Game START' : 'READY'}
-        </Button>
-        {/* )} */}
-        <Button
-          ref={exitBtn}
-          variant="contained"
-          color="secondary"
-          sx={{ m: 1, fontFamily: 'MaplestoryOTFBold', fontWeight: 'bolder' }}
-          onClick={() => {
-            navigate('/lobby');
-            socket.emit('exitRoom', {
-              from_id: socket.id,
-            });
-          }}
-        >
-          나가기
-        </Button>
-      </Box>
-    </>
+          },
+        }}
+        onClick={gameReady}
+        disabled={isReady}
+      >
+        {isCaptain ? 'Game START' : 'READY'}
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        onClick={inviteFriends}
+        sx={{ m: 1, fontFamily: 'MaplestoryOTFBold', fontWeight: 'bolder' }}
+      >
+        초대하기
+      </Button>
+      {copy && <Typography variant="body1"> 주소 복사 완료 </Typography>}
+      <Button
+        ref={exitBtn}
+        variant="contained"
+        color="secondary"
+        size="large"
+        sx={{ m: 1, fontFamily: 'MaplestoryOTFBold', fontWeight: 'bolder' }}
+        onClick={() => {
+          navigate('/lobby');
+          socket.emit('exitRoom', {
+            from_id: socket.id,
+          });
+        }}
+      >
+        나가기
+      </Button>
+    </Box>
   );
 }
