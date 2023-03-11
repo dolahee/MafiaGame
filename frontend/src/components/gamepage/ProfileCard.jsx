@@ -23,13 +23,7 @@ export default function ProfileCard({ userId }) {
   };
 
   return (
-    <Grid
-      container
-      spacing={2}
-      direction="row"
-      justifyContent="center"
-      alignItems="center"
-    >
+    <Grid container spacing={2} direction="row" justifyContent="center">
       <Grid item md={10}>
         <Paper
           sx={{

@@ -1,7 +1,17 @@
-import { Box, Grid, Paper } from '@mui/material';
+import {
+  Box,
+  Grid,
+  Paper,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Typography,
+} from '@mui/material';
 import React, { useEffect, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { socket } from '../../utils/socket';
 import useSocket from '../../hooks/useSocket';
 import useStream from '../../hooks/useStream';
@@ -13,19 +23,24 @@ import ButtonGroup from '../../components/gamepage/ButtonGroup';
 
 export default function GamePage() {
   useSocket();
-
+  const navigate = useNavigate();
   const { peerList, stream } = useStream();
   const { gameStatus } = useSelector((state) => state.status);
   const { userList, myJob } = useSelector((state) => state.room);
   const [showMafiaCard, setShowMafiaCard] = useState(false);
   const [showCitizencardCard, setShowCitizencardCard] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     socket.on('room full', () => {
-      Navigate('/Main');
-      alert('This rooom is not available');
+      setOpen(true);
     });
   }, []);
+
+  const handleClose = () => {
+    navigate('/');
+    setOpen(false);
+  };
 
   useEffect(() => {
     if (myJob === 'mafia') {
@@ -57,6 +72,21 @@ export default function GamePage() {
       alignItems="center"
     >
       <Grid item md={4}>
+        {/* 입장인원 제한 알림 다이얼로그 */}
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>입장 인원 초과</DialogTitle>
+          <DialogContent>
+            <Typography variant="body1">
+              입장 인원이 초과하여 게임에 참여할 수 없습니다.
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary" autoFocus>
+              OK
+            </Button>
+          </DialogActions>
+        </Dialog>
+
         <Paper sx={{ height: '100vh', overflow: 'auto' }}>
           {userList.map((user, index) =>
             index <= 9 ? (
@@ -71,8 +101,8 @@ export default function GamePage() {
           )}
         </Paper>
       </Grid>
-      <Grid item md={6}>
-        <Paper sx={{ height: '100vh' }}>
+      <Grid item md={8}>
+        <Paper sx={{ height: '100vh', overflow: 'auto' }}>
           <Chatting />
           {showMafiaCard ? (
             <Box
