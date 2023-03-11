@@ -19,13 +19,11 @@ import Chatting from '../../components/gamepage/Chatting';
 import ProfileCard from '../../components/gamepage/ProfileCard';
 import MafiaCard from '../../components/gamepage/JobCard/MafiaCard';
 import Citizencard from '../../components/gamepage/JobCard/Citizencard';
-import ButtonGroup from '../../components/gamepage/ButtonGroup';
 
 export default function GamePage() {
   useSocket();
   const navigate = useNavigate();
   const { peerList, stream } = useStream();
-  const { gameStatus } = useSelector((state) => state.status);
   const { userList, myJob } = useSelector((state) => state.room);
   const [showMafiaCard, setShowMafiaCard] = useState(false);
   const [showCitizencardCard, setShowCitizencardCard] = useState(false);
@@ -87,7 +85,14 @@ export default function GamePage() {
           </DialogActions>
         </Dialog>
 
-        <Paper sx={{ height: '100vh', overflow: 'auto' }}>
+        <Paper
+          sx={{
+            height: '100vh',
+            overflow: 'auto',
+            display: 'grid',
+            alignItems: 'center',
+          }}
+        >
           {userList.map((user, index) =>
             index <= 9 ? (
               <Box mb={1} key={index}>
@@ -125,7 +130,6 @@ export default function GamePage() {
               <Citizencard onClose={onCloseCitizencardCard} />
             </Box>
           ) : null}
-          {gameStatus !== 'playing' && <ButtonGroup />}
         </Paper>
       </Grid>
     </Grid>

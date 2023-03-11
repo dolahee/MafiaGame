@@ -65,7 +65,12 @@ export default function ButtonGroup() {
   });
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
       {/* 주소 복사 완료 다이얼로그 */}
       <Dialog open={copy} onClose={inviteFriends}>
         <DialogTitle>주소 복사 완료</DialogTitle>

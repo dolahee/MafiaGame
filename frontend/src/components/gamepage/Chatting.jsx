@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { socket } from '../../utils/socket';
@@ -7,15 +7,11 @@ import Message from './Message';
 import MafiaText from './MafiaText';
 import GlobalStyle from '../common/GlobalStyle';
 import ChattingInput from './ChattingInput';
-import DMText from './DMText';
+import ButtonGroup from './ButtonGroup';
 
 export default function Chatting() {
-  const [only, setOnly] = useState(true);
-  const [isDM, setIsDM] = useState(false);
-  const { timeStatus, gameStatus } = useSelector((state) => state.status);
-  const { userList } = useSelector((state) => state.room);
+  const { gameStatus } = useSelector((state) => state.status);
   const { messages } = useSelector((state) => state.message);
-  const changeToDM = () => setIsDM(!isDM);
   const [timer, setTimer] = useState(0);
   const boxRef = useRef();
 
@@ -24,10 +20,6 @@ export default function Chatting() {
       setTimer(ms);
     });
   }, []);
-
-  useEffect(() => {
-    setOnly(!userList.filter((e) => e !== '').length > 1);
-  }, [userList]);
 
   useEffect(() => {
     boxRef.current.scrollTo({
@@ -58,15 +50,15 @@ export default function Chatting() {
       <Box
         sx={{
           backgroundColor: '#8B7F70',
-          borderRadius: '10px',
-          minHeight: 600,
-          maxHeight: 600,
+          minHeight: '100vh',
+          maxHeight: '100vh',
           overflowY: 'auto',
           fontFamily: 'MaplestoryOTFBold',
           zIndex: 10000,
         }}
         ref={boxRef}
       >
+        {gameStatus !== 'playing' && <ButtonGroup />}
         <Box>
           {messages.map((message) => (
             <Message
@@ -87,17 +79,7 @@ export default function Chatting() {
             alignItems: 'center',
           }}
         >
-          {timeStatus !== 'night' && (
-            <Button
-              onClick={changeToDM}
-              sx={{ fontFamily: 'MaplestoryOTFBold' }}
-              disabled={only}
-            >
-              {isDM ? 'quitDM' : 'sendDM'}
-            </Button>
-          )}
-
-          {isDM ? <DMText userList={userList} /> : <ChattingInput />}
+          <ChattingInput />
           <MafiaText />
         </Box>
       </Box>

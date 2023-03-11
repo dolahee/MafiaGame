@@ -24,8 +24,8 @@ export default function ProfileCard({ userId }) {
   };
 
   return (
-    <Grid container spacing={2} direction="row" justifyContent="center">
-      <Grid item md={10}>
+    <Grid container spacing={1} direction="row" justifyContent="center">
+      <Grid item md={11}>
         <Paper
           sx={{
             backgroundColor: '#8B7F70',
@@ -99,10 +99,10 @@ export default function ProfileCard({ userId }) {
               <Typography variant="h7">{userId}</Typography>
             </Box>
           </Box>
-          {myJob === 'mafia' && timeStatus === 'night' ? (
+          {myJob === 'mafia' && timeStatus === 'night' && userId ? (
             <Button onClick={onClickKill}>선택</Button>
           ) : null}
-          {timeStatus === 'dayVote' ? (
+          {timeStatus === 'dayVote' && userId ? (
             <Button onClick={onClickVote}> 투표 </Button>
           ) : null}
         </Paper>

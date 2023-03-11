@@ -1,8 +1,7 @@
 import { Box, Button, TextField } from '@mui/material';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { socket } from '../../utils/socket';
-import GlobalStyle from '../common/GlobalStyle';
 
 export default function ChattingInput() {
   const { timeStatus, myStatus } = useSelector((state) => state.status);
@@ -37,7 +36,7 @@ export default function ChattingInput() {
         display: 'flex',
         backgroundColor: 'white',
         justifyContent: 'center',
-        width: '800px',
+        width: '100%',
       }}
       component="form"
       onSubmit={handleSubmit}
