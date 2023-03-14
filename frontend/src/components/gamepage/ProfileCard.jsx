@@ -24,11 +24,17 @@ export default function ProfileCard({ userId }) {
   };
 
   return (
-    <Grid container spacing={1} direction="row" justifyContent="center">
+    <Grid
+      container
+      spacing={1}
+      direction="row"
+      justifyContent="center"
+      sx={{ backgroundColor: timeStatus === 'night' ? `#171717` : `#ffffff` }}
+    >
       <Grid item md={11}>
         <Paper
           sx={{
-            backgroundColor: '#8B7F70',
+            backgroundColor: timeStatus === 'night' ? `#2f2f2e` : `#8b7f70`,
             display: 'flex',
             alignItems: 'center',
           }}

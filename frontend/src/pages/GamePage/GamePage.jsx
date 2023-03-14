@@ -23,6 +23,7 @@ import Citizencard from '../../components/gamepage/JobCard/Citizencard';
 export default function GamePage() {
   useSocket();
   const navigate = useNavigate();
+  const { timeStatus } = useSelector((state) => state.status);
   const { peerList, stream } = useStream();
   const { userList, myJob } = useSelector((state) => state.room);
   const [showMafiaCard, setShowMafiaCard] = useState(false);
@@ -68,6 +69,7 @@ export default function GamePage() {
       direction="row"
       justifyContent="center"
       alignItems="center"
+      sx={{ backgroundColor: timeStatus === 'night' ? `#171717` : `#ffffff` }}
     >
       <Grid item md={4}>
         {/* 입장인원 제한 알림 다이얼로그 */}

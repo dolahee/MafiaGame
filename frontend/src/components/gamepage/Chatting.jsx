@@ -10,7 +10,7 @@ import ChattingInput from './ChattingInput';
 import ButtonGroup from './ButtonGroup';
 
 export default function Chatting() {
-  const { gameStatus } = useSelector((state) => state.status);
+  const { gameStatus, timeStatus } = useSelector((state) => state.status);
   const { messages } = useSelector((state) => state.message);
   const [timer, setTimer] = useState(0);
   const boxRef = useRef();
@@ -49,7 +49,7 @@ export default function Chatting() {
       )}
       <Box
         sx={{
-          backgroundColor: '#8B7F70',
+          backgroundColor: timeStatus === 'night' ? `#171717` : `#8b7f70`,
           minHeight: '100vh',
           maxHeight: '100vh',
           overflowY: 'auto',
