@@ -109,7 +109,7 @@ export default function GamePage() {
         </Paper>
       </Grid>
       <Grid item md={8}>
-        <Paper sx={{ height: '100vh', overflow: 'auto' }}>
+        <Paper sx={{ height: '100vh' }}>
           <Chatting />
           {showMafiaCard ? (
             <Box

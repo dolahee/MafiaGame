@@ -31,22 +31,7 @@ export default function Chatting() {
   return (
     <>
       <GlobalStyle />
-      {gameStatus === 'wait' && timer === 0 ? null : (
-        <Box
-          sx={{
-            display: 'flex',
-            position: 'sticky',
-            top: 0,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'red',
-            height: '50px',
-            fontSize: '30px',
-          }}
-        >
-          현재 {timer / 1000}초 남았습니다.
-        </Box>
-      )}
+
       <Box
         sx={{
           backgroundColor: timeStatus === 'night' ? `#171717` : `#8b7f70`,
@@ -58,7 +43,29 @@ export default function Chatting() {
         }}
         ref={boxRef}
       >
-        {gameStatus !== 'playing' && <ButtonGroup />}
+        <Box
+          sx={{
+            display: 'flex',
+            position: 'sticky',
+            top: 0,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {gameStatus === 'wait' && timer === 0 ? null : (
+            <Box
+              sx={{
+                backgroundColor: 'red',
+                fontSize: '30px',
+              }}
+            >
+              현재 {timer / 1000}초 남았습니다.
+            </Box>
+          )}
+
+          {gameStatus !== 'playing' && <ButtonGroup />}
+        </Box>
+
         <Box sx={{ height: '100vh' }}>
           {messages.map((message) => (
             <Message
