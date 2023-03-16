@@ -12,13 +12,13 @@ import {
 import React, { useEffect, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { socket } from '../../utils/socket';
-import useSocket from '../../hooks/useSocket';
-import useStream from '../../hooks/useStream';
-import Chatting from '../../components/gamepage/Chatting';
-import ProfileCard from '../../components/gamepage/ProfileCard';
-import MafiaCard from '../../components/gamepage/JobCard/MafiaCard';
-import Citizencard from '../../components/gamepage/JobCard/Citizencard';
+import { socket } from '../utils/socket';
+import useSocket from '../hooks/useSocket';
+import useStream from '../hooks/useStream';
+import Chatting from '../components/gamepage/Chatting';
+import ProfileCard from '../components/gamepage/ProfileCard';
+import MafiaCard from '../components/gamepage/JobCard/MafiaCard';
+import Citizencard from '../components/gamepage/JobCard/Citizencard';
 
 export default function GamePage() {
   useSocket();
