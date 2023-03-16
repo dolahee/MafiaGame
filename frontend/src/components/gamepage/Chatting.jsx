@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { socket } from '../../utils/socket';
 import '../styles/Chatting.css';
 import Message from './Message';
-import MafiaText from './MafiaText';
+import MafiaInput from './MafiaInput';
 import GlobalStyle from '../common/GlobalStyle';
 import ChattingInput from './ChattingInput';
 import ButtonGroup from './ButtonGroup';
@@ -31,7 +31,6 @@ export default function Chatting() {
   return (
     <>
       <GlobalStyle />
-
       <Box
         sx={{
           backgroundColor: timeStatus === 'night' ? `#171717` : `#8b7f70`,
@@ -87,7 +86,7 @@ export default function Chatting() {
           }}
         >
           <ChattingInput />
-          <MafiaText />
+          <MafiaInput />
         </Box>
       </Box>
     </>

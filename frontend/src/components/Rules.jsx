@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import Carousel from 'react-material-ui-carousel';
 import React from 'react';
 
@@ -6,7 +7,7 @@ export default function Rules() {
   return (
     <Box>
       <Typography variant="h5" p={3}>
-        플레이 방법
+        <AutoStoriesIcon /> 플레이 방법
       </Typography>
       <Carousel indicators autoPlay height={200} interval={4000}>
         <Typography variant="h5" p={3}>
