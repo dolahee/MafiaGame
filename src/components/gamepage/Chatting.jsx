@@ -33,7 +33,7 @@ export default function Chatting() {
       <GlobalStyle />
       <Box
         sx={{
-          backgroundColor: timeStatus === 'night' ? `#171717` : `#8b7f70`,
+          backgroundColor: timeStatus === 'night' ? `#171717` : `#F6F6F6`,
           minHeight: '100vh',
           maxHeight: '100vh',
           overflowY: 'auto',
@@ -54,7 +54,7 @@ export default function Chatting() {
           {gameStatus === 'wait' && timer === 0 ? null : (
             <Box
               sx={{
-                backgroundColor: 'red',
+                backgroundColor: '#A96262',
                 fontSize: '30px',
               }}
             >

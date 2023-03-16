@@ -93,11 +93,12 @@ export default function GamePage() {
             overflow: 'auto',
             display: 'grid',
             alignItems: 'center',
+            backgroundColor: timeStatus === 'night' ? `#171717` : `#ffffff`,
           }}
         >
           {userList.map((user, index) =>
             index <= 9 ? (
-              <Box mb={1} key={index}>
+              <Box key={index}>
                 <ProfileCard
                   userId={user}
                   peerList={peerList}

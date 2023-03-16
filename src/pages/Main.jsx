@@ -24,7 +24,10 @@ export default function Main() {
   const img4 = '/images/RandomImg/img4.png';
   const img5 = '/images/RandomImg/img5.png';
   const randomImgArr = [img1, img2, img3, img4, img5];
-  const [randomImg, setRandomImg] = useState(img1);
+  const randomIndexs = Math.floor(Math.random() * randomImgArr.length);
+  const randomImgIndex = randomImgArr[randomIndexs];
+  const [randomImg, setRandomImg] = useState(randomImgIndex);
+
   const changeImg = () => {
     const randomIndex = Math.floor(Math.random() * randomImgArr.length);
     const randomImgs = randomImgArr[randomIndex];

@@ -29,12 +29,12 @@ export default function ProfileCard({ userId }) {
       spacing={1}
       direction="row"
       justifyContent="center"
-      sx={{ backgroundColor: timeStatus === 'night' ? `#171717` : `#ffffff` }}
+      sx={{ backgroundColor: timeStatus === 'night' ? `#2f2f2e` : `#F6F6F6` }}
     >
       <Grid item md={11}>
         <Paper
           sx={{
-            backgroundColor: timeStatus === 'night' ? `#2f2f2e` : `#8b7f70`,
+            backgroundColor: timeStatus === 'night' ? `#2f2f2e` : `#943B3B`,
             display: 'flex',
             alignItems: 'center',
           }}
@@ -43,7 +43,6 @@ export default function ProfileCard({ userId }) {
             sx={{
               width: '100px',
               height: '100px',
-              backgroundColor: '#E4D9C6',
               borderRadius: '3px',
             }}
           >
@@ -94,22 +93,26 @@ export default function ProfileCard({ userId }) {
           <Box pl={1}>
             <Box
               sx={{
-                backgroundColor: '#D9D9D9',
                 borderRadius: '5px',
-                width: '150px',
                 display: 'flex',
                 justifyContent: 'center',
                 border: userId === mySocketId ? `2px solid red` : undefined,
               }}
             >
-              <Typography variant="h7">{userId}</Typography>
+              <Typography color="#FFFFF" variant="h7">
+                {userId}
+              </Typography>
             </Box>
           </Box>
           {myJob === 'mafia' && timeStatus === 'night' && userId ? (
-            <Button onClick={onClickKill}>선택</Button>
+            <Button color="secondary" variant="contained" onClick={onClickKill}>
+              선택
+            </Button>
           ) : null}
           {timeStatus === 'dayVote' && userId ? (
-            <Button onClick={onClickVote}> 투표 </Button>
+            <Button color="secondary" variant="contained" onClick={onClickVote}>
+              투표
+            </Button>
           ) : null}
         </Paper>
       </Grid>
