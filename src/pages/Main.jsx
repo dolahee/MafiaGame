@@ -1,9 +1,10 @@
 import { Box, Button, Grid, TextField, Paper } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import NickNameData from '../NickNameData.json';
 import Rules from '../components/Rules';
+import { socket } from '../utils/socket';
 
 export default function Main() {
   const navigate = useNavigate();
@@ -26,13 +27,30 @@ export default function Main() {
   const randomImgArr = [img1, img2, img3, img4, img5];
   const randomIndexs = Math.floor(Math.random() * randomImgArr.length);
   const randomImgIndex = randomImgArr[randomIndexs];
+  const [imgIndex, setImgindex] = useState(randomIndexs);
   const [randomImg, setRandomImg] = useState(randomImgIndex);
 
   const changeImg = () => {
     const randomIndex = Math.floor(Math.random() * randomImgArr.length);
     const randomImgs = randomImgArr[randomIndex];
     setRandomImg(randomImgs);
+    setImgindex(randomIndex);
   };
+
+  const gameStart = () => {
+    socket.emit('saveUserInfoRequest', nickName, imgIndex);
+    socket.emit('createRoomRequest');
+  };
+
+  useEffect(() => {
+    socket.on('saveUserInfoResponse', (user) => {
+      console.log(user);
+    });
+    socket.on('createRoomResponse', (room) => {
+      console.log(room);
+      navigate(`/gamepage/${room}`);
+    });
+  }, []);
 
   return (
     <Grid
@@ -69,9 +87,7 @@ export default function Main() {
                     fullWidth
                     variant="contained"
                     size="large"
-                    onClick={() => {
-                      navigate('/gamepage');
-                    }}
+                    onClick={gameStart}
                   >
                     Game Start
                   </Button>

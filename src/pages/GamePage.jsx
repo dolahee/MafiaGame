@@ -13,7 +13,6 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { socket } from '../utils/socket';
-import useSocket from '../hooks/useSocket';
 import useStream from '../hooks/useStream';
 import Chatting from '../components/gamepage/Chatting';
 import ProfileCard from '../components/gamepage/ProfileCard';
@@ -21,7 +20,6 @@ import MafiaCard from '../components/gamepage/JobCard/MafiaCard';
 import Citizencard from '../components/gamepage/JobCard/Citizencard';
 
 export default function GamePage() {
-  useSocket();
   const navigate = useNavigate();
   const { timeStatus } = useSelector((state) => state.status);
   const { peerList, stream } = useStream();
@@ -69,7 +67,7 @@ export default function GamePage() {
       direction="row"
       justifyContent="center"
       alignItems="center"
-      sx={{ backgroundColor: timeStatus === 'night' ? `#171717` : `#ffffff` }}
+      sx={{ backgroundColor: timeStatus === 'night' ? `#2f2f2e` : `#F6F6F6` }}
     >
       <Grid item md={4}>
         {/* 입장인원 제한 알림 다이얼로그 */}
@@ -93,7 +91,7 @@ export default function GamePage() {
             overflow: 'auto',
             display: 'grid',
             alignItems: 'center',
-            backgroundColor: timeStatus === 'night' ? `#171717` : `#ffffff`,
+            backgroundColor: timeStatus === 'night' ? `#2f2f2e` : `#F6F6F6`,
           }}
         >
           {userList.map((user, index) =>

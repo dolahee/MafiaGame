@@ -4,12 +4,14 @@ import './App.css';
 import GamePage from './pages/GamePage';
 import Main from './pages/Main';
 import NotFound from './pages/NotFound';
+import useSocket from './hooks/useSocket';
 
 function App() {
+  useSocket();
   return (
     <Routes>
       <Route path="/" element={<Main />} />
-      <Route path="/gamepage" element={<GamePage />} />
+      <Route path="/gamepage/:room" element={<GamePage />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );
