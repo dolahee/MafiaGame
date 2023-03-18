@@ -44,7 +44,8 @@ export default function Main() {
 
   useEffect(() => {
     socket.on('saveUserInfoResponse', (user) => {
-      console.log(user);
+      console.log(user.nickname);
+      console.log(user.imgIdx);
     });
     socket.on('createRoomResponse', (room) => {
       console.log(room);

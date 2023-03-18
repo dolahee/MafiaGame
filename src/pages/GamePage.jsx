@@ -28,6 +28,7 @@ export default function GamePage() {
   const [showCitizencardCard, setShowCitizencardCard] = useState(false);
   const [open, setOpen] = useState(false);
 
+  // 게임 방 인원 초과 시 나오는 다이얼로그
   useEffect(() => {
     socket.on('room full', () => {
       setOpen(true);
@@ -39,13 +40,11 @@ export default function GamePage() {
     setOpen(false);
   };
 
+  // 직업 카드 배정 후 닫기
   useEffect(() => {
     if (myJob === 'mafia') {
       setShowMafiaCard(true);
     }
-  }, [myJob]);
-
-  useEffect(() => {
     if (myJob === 'citizen') {
       setShowCitizencardCard(true);
     }
@@ -53,10 +52,6 @@ export default function GamePage() {
 
   const onCloseCard = useCallback(() => {
     setShowMafiaCard(false);
-  }, []);
-
-  const onCloseCitizencardCard = useCallback(() => {
-    console.log('클릭');
     setShowCitizencardCard(false);
   }, []);
 
@@ -110,6 +105,8 @@ export default function GamePage() {
       <Grid item md={8}>
         <Paper sx={{ height: '100vh', overflowY: 'auto' }}>
           <Chatting />
+
+          {/* 직업 카드 배정 */}
           {showMafiaCard ? (
             <Box
               sx={{
@@ -128,7 +125,7 @@ export default function GamePage() {
                 justifyContent: 'center',
               }}
             >
-              <Citizencard onClose={onCloseCitizencardCard} />
+              <Citizencard onClose={onCloseCard} />
             </Box>
           ) : null}
         </Paper>
