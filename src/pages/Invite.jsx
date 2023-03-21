@@ -1,14 +1,12 @@
 import { Box, Button, Grid, TextField, Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { useDispatch } from 'react-redux';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import NickNameData from '../NickNameData.json';
 import Rules from '../components/Rules';
 import { socket } from '../utils/socket';
-import { setUser } from '../store/modules/user';
 
-export default function Main() {
+export default function Invite() {
   const navigate = useNavigate();
   const randomNickname =
     NickNameData.determiners[
@@ -21,11 +19,11 @@ export default function Main() {
   const [nickName, setNickName] = useState(randomNickname);
   const changeNickName = (event) => setNickName(event.target.value);
 
-  const img1 = '/images/RandomImg/img0.png';
-  const img2 = '/images/RandomImg/img1.png';
-  const img3 = '/images/RandomImg/img2.png';
-  const img4 = '/images/RandomImg/img3.png';
-  const img5 = '/images/RandomImg/img4.png';
+  const img1 = '/images/RandomImg/img1.png';
+  const img2 = '/images/RandomImg/img2.png';
+  const img3 = '/images/RandomImg/img3.png';
+  const img4 = '/images/RandomImg/img4.png';
+  const img5 = '/images/RandomImg/img5.png';
   const randomImgArr = [img1, img2, img3, img4, img5];
   const randomIndexs = Math.floor(Math.random() * randomImgArr.length);
   const randomImgIndex = randomImgArr[randomIndexs];
@@ -44,15 +42,13 @@ export default function Main() {
     socket.emit('createRoomRequest');
   };
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     socket.on('saveUserInfoResponse', (user) => {
       console.log(user.nickname);
       console.log(user.imgIdx);
-      dispatch(setUser(user));
     });
     socket.on('createRoomResponse', (room) => {
+      console.log(room);
       navigate(`/gamepage/${room}`);
     });
   }, []);
@@ -94,7 +90,7 @@ export default function Main() {
                     size="large"
                     onClick={gameStart}
                   >
-                    Game Start
+                    Join
                   </Button>
                 </Box>
               </Box>

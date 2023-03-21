@@ -77,7 +77,7 @@ export const resetRoomState = () => ({
   payload: {},
 });
 // REDUCER
-export default function room(state = initState, action) {
+export default function RoomReducer(state = initState, action) {
   switch (action.type) {
     case SET_SOCKET_ID:
       return { ...state, mySocketId: action.payload.mySocketId };

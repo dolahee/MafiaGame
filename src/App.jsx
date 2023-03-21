@@ -5,6 +5,7 @@ import GamePage from './pages/GamePage';
 import Main from './pages/Main';
 import NotFound from './pages/NotFound';
 import useSocket from './hooks/useSocket';
+import Invite from './pages/Invite';
 
 function App() {
   useSocket();
@@ -12,6 +13,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Main />} />
       <Route path="/gamepage/:room" element={<GamePage />} />
+      <Route path="/invite" element={<Invite />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );

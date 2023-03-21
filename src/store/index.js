@@ -2,13 +2,11 @@ import { combineReducers } from 'redux';
 import room from './modules/room';
 import MessageReducer from './modules/message';
 import StatusReducer from './modules/status';
-import { asyncThunkSlice } from './modules/roomlist';
-import userInfo from './modules/userInfo';
+import UserReducer from './modules/user';
 
 export default combineReducers({
   room,
-  userInfo,
+  user: UserReducer,
   message: MessageReducer,
   status: StatusReducer,
-  asyncThunk: asyncThunkSlice.reducer,
 });

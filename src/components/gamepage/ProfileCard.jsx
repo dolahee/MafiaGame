@@ -3,8 +3,9 @@ import { Box, Button, Grid, Paper, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { socket } from '../../utils/socket';
 
-export default function ProfileCard({ userId }) {
+export default function ProfileCard({ userId, userImg }) {
   const { timeStatus } = useSelector((state) => state.status);
+  const { user } = useSelector((state) => state.user);
   const { mySocketId, myJob, killedUserList, mafiaPickId } = useSelector(
     (state) => state.room
   );
@@ -81,8 +82,8 @@ export default function ProfileCard({ userId }) {
             ) : null}
 
             <img
-              src="/images/RandomImg/img1.png"
-              alt="killimg"
+              src={`/images/RandomImg/img${userImg}.png`}
+              alt="RandomImg"
               style={{
                 width: '100px',
                 height: '100px',
@@ -96,7 +97,7 @@ export default function ProfileCard({ userId }) {
                 borderRadius: '5px',
                 display: 'flex',
                 justifyContent: 'center',
-                border: userId === mySocketId ? `2px solid red` : undefined,
+                border: userId === user.nickname ? `2px solid red` : undefined,
               }}
             >
               <Typography color="#FFFFF" variant="h7">
