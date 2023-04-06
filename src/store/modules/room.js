@@ -41,10 +41,10 @@ const RESET_ROOM_STATE = 'RESET_ROOM_STATE';
 export const getRoomID = (roomID) => ({ type: GET_ROOM_ID, payload: roomID });
 
 /** 유저 목록 저장 함수
- * @param {string[]} userList 유저 목록 */
+ * @param {[]} userList 유저 목록 */
 export const getUserList = (userList) => ({
   type: GET_USER_LIST,
-  payload: { userList },
+  payload: userList,
 });
 
 export const setJobList = (jobList, myJob) => ({
@@ -84,7 +84,7 @@ export default function RoomReducer(state = initState, action) {
     case GET_ROOM_ID:
       return { ...state, roomID: action.payload.roomID };
     case GET_USER_LIST: {
-      const newUserList = [...action.payload.userList];
+      const newUserList = [...action.payload];
       for (let i = 0; i < 8; i += 1) {
         if (!newUserList[i]) newUserList.push('');
       }

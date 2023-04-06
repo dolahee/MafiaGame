@@ -52,8 +52,11 @@ export default function ButtonGroup() {
 
   // 버튼 클릭 시 페이지 주소가 복사 됨
   const [copy, setcopy] = useState(false);
+  const [url, setUrl] = useState(window.location.href);
+
   const inviteFriends = () => {
-    navigator.clipboard.writeText(window.location.href);
+    const modifiedUrl = `${url}/Invite`;
+    navigator.clipboard.writeText(modifiedUrl);
     setcopy(true);
   };
   const handleClose = () => {

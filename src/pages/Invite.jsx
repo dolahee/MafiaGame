@@ -1,6 +1,6 @@
 import { Box, Button, Grid, TextField, Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import NickNameData from '../NickNameData.json';
 import Rules from '../components/Rules';
@@ -8,6 +8,7 @@ import { socket } from '../utils/socket';
 
 export default function Invite() {
   const navigate = useNavigate();
+  const params = useParams();
   const randomNickname =
     NickNameData.determiners[
       Math.floor(Math.random() * NickNameData.determiners.length)
@@ -41,17 +42,13 @@ export default function Invite() {
 
   const gameStart = () => {
     socket.emit('saveUserInfoRequest', nickName, imgIndex);
-    socket.emit('createRoomRequest');
   };
 
   useEffect(() => {
     socket.on('saveUserInfoResponse', (user) => {
       console.log(user.nickname);
       console.log(user.imgIdx);
-    });
-    socket.on('createRoomResponse', (room) => {
-      console.log(room);
-      navigate(`/gamepage/${room}`);
+      navigate(`/gamepage/${params.room}`);
     });
   }, []);
 

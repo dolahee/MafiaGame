@@ -6,13 +6,14 @@ import { socket } from '../../utils/socket';
 export default function ChattingInput() {
   const { timeStatus, myStatus } = useSelector((state) => state.status);
   const { finalistId, mySocketId } = useSelector((state) => state.room);
+  const { user } = useSelector((state) => state.user);
   const [value, setValue] = useState('');
   const handleChange = (event) => setValue(event.target.value);
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('chat input: ', value);
+    console.log(user.nickname, ':', value);
     socket.emit('sendChat', {
-      from_id: socket.id,
+      from_id: user.nickname,
       msg: value,
     });
     setValue('');
