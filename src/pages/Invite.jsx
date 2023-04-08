@@ -2,9 +2,12 @@ import { Box, Button, Grid, TextField, Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import { useDispatch } from 'react-redux';
 import NickNameData from '../NickNameData.json';
 import Rules from '../components/Rules';
 import { socket } from '../utils/socket';
+
+import { setUser } from '../store/modules/user';
 
 export default function Invite() {
   const navigate = useNavigate();
@@ -42,12 +45,17 @@ export default function Invite() {
 
   const gameStart = () => {
     socket.emit('saveUserInfoRequest', nickName, imgIndex);
+    socket.emit('createRoomRequest');
   };
+  const dispatch = useDispatch();
 
   useEffect(() => {
     socket.on('saveUserInfoResponse', (user) => {
       console.log(user.nickname);
       console.log(user.imgIdx);
+      dispatch(setUser(user));
+    });
+    socket.on('createRoomResponse', () => {
       navigate(`/gamepage/${params.room}`);
     });
   }, []);

@@ -12,6 +12,7 @@ export default function ChattingInput() {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(user.nickname, ':', value);
+    console.log(socket.id, ':', value);
     socket.emit('sendChat', {
       from_id: user.nickname,
       msg: value,

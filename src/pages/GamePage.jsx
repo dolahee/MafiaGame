@@ -18,7 +18,6 @@ import Chatting from '../components/gamepage/Chatting';
 import ProfileCard from '../components/gamepage/ProfileCard';
 import MafiaCard from '../components/gamepage/JobCard/MafiaCard';
 import Citizencard from '../components/gamepage/JobCard/Citizencard';
-import Invite from './Invite';
 
 export default function GamePage() {
   const navigate = useNavigate();
@@ -32,19 +31,17 @@ export default function GamePage() {
   const dispatch = useDispatch();
 
   // 게임 방 인원 초과 시 나오는 다이얼로그
-  useEffect(
-    () => {
-      socket.on('room full', () => {
-        setOpen(true);
-      });
-    },
-    console.log(user.socketId),
+  useEffect(() => {
+    socket.on('room full', () => {
+      setOpen(true);
+    });
 
     socket.emit('joinRoomRequest', params.room);
     socket.on('userListSync', (res) => {
       const action = getUserList(res);
-      console.log(action);
       dispatch(action);
+      console.log(socket.id);
+      console.log(user.nickname);
     });
   }, []);
 
