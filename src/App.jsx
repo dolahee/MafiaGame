@@ -13,7 +13,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Main />} />
       <Route path="/gamepage/:room" element={<GamePage />} />
-      <Route path="/invite" element={<Invite />} />
+      <Route path="/gamepage/:room/invite" element={<Invite />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );

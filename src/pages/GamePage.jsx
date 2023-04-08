@@ -10,22 +10,26 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useEffect, useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router';
+import { getUserList } from '../store/modules/room';
 import { socket } from '../utils/socket';
 import Chatting from '../components/gamepage/Chatting';
 import ProfileCard from '../components/gamepage/ProfileCard';
 import MafiaCard from '../components/gamepage/JobCard/MafiaCard';
 import Citizencard from '../components/gamepage/JobCard/Citizencard';
+import Invite from './Invite';
 
 export default function GamePage() {
   const navigate = useNavigate();
+  const params = useParams();
   const { timeStatus } = useSelector((state) => state.status);
   const { user } = useSelector((state) => state.user);
   const { userList, myJob } = useSelector((state) => state.room);
   const [showMafiaCard, setShowMafiaCard] = useState(false);
   const [showCitizencardCard, setShowCitizencardCard] = useState(false);
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
   // 게임 방 인원 초과 시 나오는 다이얼로그
   useEffect(
@@ -35,10 +39,14 @@ export default function GamePage() {
       });
     },
     console.log(user.socketId),
-    console.log(userList),
 
-    []
-  );
+    socket.emit('joinRoomRequest', params.room);
+    socket.on('userListSync', (res) => {
+      const action = getUserList(res);
+      console.log(action);
+      dispatch(action);
+    });
+  }, []);
 
   const handleClose = () => {
     navigate('/');

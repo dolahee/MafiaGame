@@ -21,12 +21,14 @@ export default function Main() {
   const [nickName, setNickName] = useState(randomNickname);
   const changeNickName = (event) => setNickName(event.target.value);
 
-  const img1 = '/images/RandomImg/img0.png';
-  const img2 = '/images/RandomImg/img1.png';
-  const img3 = '/images/RandomImg/img2.png';
-  const img4 = '/images/RandomImg/img3.png';
-  const img5 = '/images/RandomImg/img4.png';
-  const randomImgArr = [img1, img2, img3, img4, img5];
+  const img0 = '/images/RandomImg/img0.png';
+  const img1 = '/images/RandomImg/img1.png';
+  const img2 = '/images/RandomImg/img2.png';
+  const img3 = '/images/RandomImg/img3.png';
+  const img4 = '/images/RandomImg/img4.png';
+  const img5 = '/images/RandomImg/img5.png';
+  const img6 = '/images/RandomImg/img6.png';
+  const randomImgArr = [img0, img1, img2, img3, img4, img5, img6];
   const randomIndexs = Math.floor(Math.random() * randomImgArr.length);
   const randomImgIndex = randomImgArr[randomIndexs];
   const [imgIndex, setImgindex] = useState(randomIndexs);
