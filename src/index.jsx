@@ -28,7 +28,7 @@ root.render(
     <CssBaseline />
     <Provider store={store}>
       <CookiesProvider>
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <BrowserRouter>
           <App />
         </BrowserRouter>
       </CookiesProvider>

@@ -35,6 +35,7 @@ export default function GamePage() {
       });
     },
     console.log(user.socketId),
+    console.log(userList),
 
     []
   );
@@ -96,7 +97,7 @@ export default function GamePage() {
           {userList.map((users, index) =>
             index <= 9 ? (
               <Box key={index}>
-                <ProfileCard userId={user.nickname} userImg={user.imgIdx} />
+                <ProfileCard userId={users.nickname} userImg={users.imgIdx} />
               </Box>
             ) : null
           )}

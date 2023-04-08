@@ -37,6 +37,7 @@ export default function Main() {
     const randomImgs = randomImgArr[randomIndex];
     setRandomImg(randomImgs);
     setImgindex(randomIndex);
+    console.log(randomImgs);
   };
 
   const gameStart = () => {
