@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { socket } from '../../utils/socket';
 
 export default function ButtonGroup() {
@@ -19,6 +19,7 @@ export default function ButtonGroup() {
   const readyBtn = useRef();
   // const startBtn = useRef();
   const userList = useSelector((state) => state.room.userList);
+  const dispatch = useDispatch();
 
   // userList의 첫번째 socket.id 가 captain, userList 바뀔때마다 update
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ export default function ButtonGroup() {
     } else {
       setIsCaptain(false);
     }
-    if (!isCaptain && userList.length >= 4) {
+    if (!isCaptain && userList.length >= 3) {
       setIsReady(false);
     } else {
       setIsReady(true);
@@ -39,14 +40,12 @@ export default function ButtonGroup() {
   const gameReady = () => {
     setIsReady(true);
     if (isCaptain) {
-      socket.emit('gameStart', {
-        from_id: socket.id,
-        userList,
-      });
+      socket.emit('gameStartRequest', {});
+      console.log(isReady);
     } else {
-      socket.emit('gameReady', {
-        from_id: socket.id,
-      });
+      socket.emit('gameReadyRequest', {});
+      console.log(userList);
+      console.log(isReady);
     }
   };
 
@@ -103,9 +102,9 @@ export default function ButtonGroup() {
             },
           }}
           onClick={gameReady}
-          disabled={isReady}
+          // disabled={isReady}
         >
-          {isCaptain ? 'Game START' : 'READY'}
+          {userList[0].id === socket.id ? 'Game START' : 'READY'}
         </Button>
       </Box>
       <Box m={1}>
