@@ -47,7 +47,6 @@ export default function Invite() {
 
   const gameStart = () => {
     socket.emit('saveUserInfoRequest', nickName, imgIndex);
-    socket.emit('joinRoomRequest', room);
     navigate(`/gamepage/${room}`);
   };
   return (

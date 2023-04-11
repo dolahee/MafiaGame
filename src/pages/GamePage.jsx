@@ -11,7 +11,8 @@ import {
 } from '@mui/material';
 import React, { useEffect, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
+import { socket } from '../utils/socket';
 import Chatting from '../components/gamepage/Chatting';
 import ProfileCard from '../components/gamepage/ProfileCard';
 import MafiaCard from '../components/gamepage/JobCard/MafiaCard';
@@ -29,6 +30,11 @@ export default function GamePage() {
     navigate('/');
     setOpen(false);
   };
+
+  const { room } = useParams();
+  useEffect(() => {
+    socket.emit('joinRoomRequest', room);
+  }, []);
 
   // 직업 카드 배정 후 닫기
   useEffect(() => {

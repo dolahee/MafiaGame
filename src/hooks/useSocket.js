@@ -23,6 +23,7 @@ const useSocket = () => {
 
     // 메시지
     socket.on('serverMessage', (msg) => {});
+
     // 게임시작
     socket.on('gameReadySync', (res) => {
       dispatch(setUserList(res));

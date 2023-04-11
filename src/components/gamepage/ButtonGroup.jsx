@@ -13,17 +13,11 @@ import { useSelector } from 'react-redux';
 import { socket } from '../../utils/socket';
 
 export default function ButtonGroup() {
-  const [isReady, setIsReady] = useState(false);
+  const [isReadys, setIsReady] = useState(false);
   const exitBtn = useRef();
   const readyBtn = useRef();
-  // const startBtn = useRef();
   const userList = useSelector((state) => state.room.userList);
-
-  // userList의 첫번째 socket.id 가 captain, userList 바뀔때마다 update
   const navigate = useNavigate();
-
-  const gameReady = () => {};
-
   // 버튼 클릭 시 페이지 주소가 복사 됨
   const [copy, setcopy] = useState(false);
   const [url, setUrl] = useState(window.location.href);
@@ -35,6 +29,14 @@ export default function ButtonGroup() {
   };
   const handleClose = () => {
     setcopy(false);
+  };
+
+  // 게임 준비와 게임 스타트
+
+  const gameReady = () => {
+    setIsReady(true);
+    socket.emit('gameReadyRequest', true);
+    socket.emit('gameStartRequest', true);
   };
 
   return (
@@ -73,7 +75,7 @@ export default function ButtonGroup() {
             },
           }}
           onClick={gameReady}
-          disabled={isReady}
+          disabled={isReadys}
         >
           {userList[0].id === socket.id ? 'Game START' : 'READY'}
         </Button>
