@@ -7,47 +7,22 @@ import {
   DialogTitle,
   Typography,
 } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { socket } from '../../utils/socket';
 
 export default function ButtonGroup() {
   const [isReady, setIsReady] = useState(false);
-  const [isCaptain, setIsCaptain] = useState(false);
   const exitBtn = useRef();
   const readyBtn = useRef();
   // const startBtn = useRef();
   const userList = useSelector((state) => state.room.userList);
-  const dispatch = useDispatch();
 
   // userList의 첫번째 socket.id 가 captain, userList 바뀔때마다 update
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (userList.indexOf(socket.id) === 0) {
-      setIsCaptain(true);
-    } else {
-      setIsCaptain(false);
-    }
-    if (!isCaptain && userList.length >= 3) {
-      setIsReady(false);
-    } else {
-      setIsReady(true);
-    }
-  }, [userList]);
-
-  const gameReady = () => {
-    setIsReady(true);
-    if (isCaptain) {
-      socket.emit('gameStartRequest', {});
-      console.log(isReady);
-    } else {
-      socket.emit('gameReadyRequest', {});
-      console.log(userList);
-      console.log(isReady);
-    }
-  };
+  const gameReady = () => {};
 
   // 버튼 클릭 시 페이지 주소가 복사 됨
   const [copy, setcopy] = useState(false);
@@ -61,10 +36,6 @@ export default function ButtonGroup() {
   const handleClose = () => {
     setcopy(false);
   };
-
-  socket.on('readyComplete', () => {
-    setIsReady(false);
-  });
 
   return (
     <Box
@@ -102,7 +73,7 @@ export default function ButtonGroup() {
             },
           }}
           onClick={gameReady}
-          // disabled={isReady}
+          disabled={isReady}
         >
           {userList[0].id === socket.id ? 'Game START' : 'READY'}
         </Button>

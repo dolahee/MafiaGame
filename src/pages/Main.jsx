@@ -1,15 +1,11 @@
 import { Box, Button, Grid, TextField, Paper } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import NickNameData from '../NickNameData.json';
 import Rules from '../components/Rules';
 import { socket } from '../utils/socket';
-import { setUser } from '../store/modules/user';
 
 export default function Main() {
-  const navigate = useNavigate();
   const randomNickname =
     NickNameData.determiners[
       Math.floor(Math.random() * NickNameData.determiners.length)
@@ -45,19 +41,6 @@ export default function Main() {
     socket.emit('saveUserInfoRequest', nickName, imgIndex);
     socket.emit('createRoomRequest');
   };
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    socket.on('saveUserInfoResponse', (user) => {
-      console.log(user.nickname);
-      console.log(user.imgIdx);
-      dispatch(setUser(user));
-    });
-    socket.on('createRoomResponse', (room) => {
-      navigate(`/gamepage/${room}`);
-    });
-  }, []);
 
   return (
     <Grid

@@ -10,10 +10,8 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useEffect, useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router';
-import { getUserList } from '../store/modules/room';
-import { socket } from '../utils/socket';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 import Chatting from '../components/gamepage/Chatting';
 import ProfileCard from '../components/gamepage/ProfileCard';
 import MafiaCard from '../components/gamepage/JobCard/MafiaCard';
@@ -21,29 +19,11 @@ import Citizencard from '../components/gamepage/JobCard/Citizencard';
 
 export default function GamePage() {
   const navigate = useNavigate();
-  const params = useParams();
   const { timeStatus } = useSelector((state) => state.status);
-  const { user } = useSelector((state) => state.user);
   const { userList, myJob } = useSelector((state) => state.room);
   const [showMafiaCard, setShowMafiaCard] = useState(false);
   const [showCitizencardCard, setShowCitizencardCard] = useState(false);
   const [open, setOpen] = useState(false);
-  const dispatch = useDispatch();
-
-  // 게임 방 인원 초과 시 나오는 다이얼로그
-  useEffect(() => {
-    socket.on('room full', () => {
-      setOpen(true);
-    });
-
-    socket.emit('joinRoomRequest', params.room);
-    socket.on('userListSync', (res) => {
-      const action = getUserList(res);
-      dispatch(action);
-      console.log(socket.id);
-      console.log(user.nickname);
-    });
-  }, []);
 
   const handleClose = () => {
     navigate('/');
@@ -99,13 +79,15 @@ export default function GamePage() {
             backgroundColor: timeStatus === 'night' ? `#2f2f2e` : `#F6F6F6`,
           }}
         >
-          {userList.map((users, index) =>
-            index <= 9 ? (
-              <Box key={index}>
-                <ProfileCard userId={users.nickname} userImg={users.imgIdx} />
-              </Box>
-            ) : null
-          )}
+          {userList.map((usr, index) => (
+            <Box key={index}>
+              <ProfileCard
+                userId={usr.nickname}
+                userImg={usr.imgIdx}
+                userisReady={usr.isReady}
+              />
+            </Box>
+          ))}
         </Paper>
       </Grid>
       <Grid item md={8}>

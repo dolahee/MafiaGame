@@ -3,7 +3,7 @@ import { Box, Button, Grid, Paper, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { socket } from '../../utils/socket';
 
-export default function ProfileCard({ userId, userImg }) {
+export default function ProfileCard({ userId, userImg, userisReady }) {
   const { timeStatus } = useSelector((state) => state.status);
   const { user } = useSelector((state) => state.user);
   const { mySocketId, myJob, killedUserList, mafiaPickId } = useSelector(
@@ -114,6 +114,12 @@ export default function ProfileCard({ userId, userImg }) {
             <Button color="secondary" variant="contained" onClick={onClickVote}>
               투표
             </Button>
+          ) : null}
+
+          {userisReady === true ? (
+            <Typography color="#FFFFF" variant="h7" ml={5}>
+              Ready
+            </Typography>
           ) : null}
         </Paper>
       </Grid>

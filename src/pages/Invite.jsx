@@ -1,17 +1,14 @@
 import { Box, Button, Grid, TextField, Paper } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import React, { useState, useEffect } from 'react';
+
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import NickNameData from '../NickNameData.json';
 import Rules from '../components/Rules';
 import { socket } from '../utils/socket';
 
-import { setUser } from '../store/modules/user';
-
 export default function Invite() {
   const navigate = useNavigate();
-  const params = useParams();
   const randomNickname =
     NickNameData.determiners[
       Math.floor(Math.random() * NickNameData.determiners.length)
@@ -43,23 +40,16 @@ export default function Invite() {
     setImgindex(randomIndex);
   };
 
-  const gameStart = () => {
-    socket.emit('saveUserInfoRequest', nickName, imgIndex);
-    socket.emit('createRoomRequest');
-  };
-  const dispatch = useDispatch();
-
+  const { room } = useParams();
   useEffect(() => {
-    socket.on('saveUserInfoResponse', (user) => {
-      console.log(user.nickname);
-      console.log(user.imgIdx);
-      dispatch(setUser(user));
-    });
-    socket.on('createRoomResponse', () => {
-      navigate(`/gamepage/${params.room}`);
-    });
+    console.log(room);
   }, []);
 
+  const gameStart = () => {
+    socket.emit('saveUserInfoRequest', nickName, imgIndex);
+    socket.emit('joinRoomRequest', room);
+    navigate(`/gamepage/${room}`);
+  };
   return (
     <Grid
       container

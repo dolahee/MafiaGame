@@ -22,7 +22,7 @@ const initState = {
 // ACTION TYPE
 const GET_ROOM_ID = 'GET_ROOM_ID';
 
-const GET_USER_LIST = 'GET_USER_LIST';
+const SET_USER_LIST = 'SET_USER_LIST';
 
 const SET_JOB_LIST = 'SET_JOB_LIST';
 
@@ -42,8 +42,8 @@ export const getRoomID = (roomID) => ({ type: GET_ROOM_ID, payload: roomID });
 
 /** 유저 목록 저장 함수
  * @param {[]} userList 유저 목록 */
-export const getUserList = (userList) => ({
-  type: GET_USER_LIST,
+export const setUserList = (userList) => ({
+  type: SET_USER_LIST,
   payload: userList,
 });
 
@@ -83,7 +83,7 @@ export default function RoomReducer(state = initState, action) {
       return { ...state, mySocketId: action.payload.mySocketId };
     case GET_ROOM_ID:
       return { ...state, roomID: action.payload.roomID };
-    case GET_USER_LIST: {
+    case SET_USER_LIST: {
       const newUserList = [...action.payload];
       for (let i = 0; i < 8; i += 1) {
         if (!newUserList[i]) newUserList.push('');
