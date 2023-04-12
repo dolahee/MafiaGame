@@ -1,8 +1,8 @@
 const ADD_MESSAGE = 'ADD_MESSAGE';
 
-export const addMessage = (msg, type, fromId, toId) => ({
+export const addMessage = (message) => ({
   type: ADD_MESSAGE,
-  payload: { msg, type, fromId, toId },
+  payload: { message },
 });
 
 const initialState = {
@@ -14,13 +14,7 @@ const MessageReducer = (state = initialState, action) => {
     case ADD_MESSAGE:
       return {
         ...state,
-        messages: [
-          ...state.messages,
-          {
-            ...action.payload,
-            id: Date.now(),
-          },
-        ],
+        messages: [...state.messages, action.payload.message],
       };
     default:
       return state;

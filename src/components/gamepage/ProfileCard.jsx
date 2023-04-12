@@ -13,7 +13,6 @@ export default function ProfileCard({ userId, userImg, userisReady }) {
   const onClickKill = () => {
     if (myJob === 'mafia' && timeStatus === 'night') {
       socket.emit('mafiaVoted', { killed_id: userId, from_id: mySocketId });
-      console.log(mySocketId);
     }
   };
 

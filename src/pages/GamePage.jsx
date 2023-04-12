@@ -22,6 +22,7 @@ export default function GamePage() {
   const navigate = useNavigate();
   const { timeStatus } = useSelector((state) => state.status);
   const { userList, myJob } = useSelector((state) => state.room);
+  const { user } = useSelector((state) => state.user);
   const [showMafiaCard, setShowMafiaCard] = useState(false);
   const [showCitizencardCard, setShowCitizencardCard] = useState(false);
   const [open, setOpen] = useState(false);

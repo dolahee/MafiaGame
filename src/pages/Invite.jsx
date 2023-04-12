@@ -41,9 +41,7 @@ export default function Invite() {
   };
 
   const { room } = useParams();
-  useEffect(() => {
-    console.log(room);
-  }, []);
+  useEffect(() => {}, []);
 
   const gameStart = () => {
     socket.emit('saveUserInfoRequest', nickName, imgIndex);

@@ -11,6 +11,7 @@ import ButtonGroup from './ButtonGroup';
 export default function Chatting() {
   const { gameStatus, timeStatus } = useSelector((state) => state.status);
   const { messages } = useSelector((state) => state.message);
+
   const [timer, setTimer] = useState(0);
   const boxRef = useRef();
 
@@ -59,20 +60,18 @@ export default function Chatting() {
         </Box>
 
         <Box sx={{ height: '100vh' }}>
-          <Message />
-          {/* {messages.map((message) => (
+          {messages.map((message) => (
             <Message
-              key={message.id}
-              msg={message.msg}
+              sender={message.sender}
+              text={message.text}
               type={message.type}
-              fromId={message.fromId}
-              toId={message.toId}
             />
-          ))} */}
+          ))}
         </Box>
         <Box
           sx={{
-            position: 'sticky',
+            position: 'fixed',
+            width: '50%',
             bottom: 0,
             display: 'flex',
             justifyContent: 'center',
@@ -80,6 +79,7 @@ export default function Chatting() {
           }}
         >
           <ChattingInput />
+
           <MafiaInput />
         </Box>
       </Box>
