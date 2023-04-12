@@ -11,12 +11,13 @@ export default function ChattingInput() {
   const handleChange = (event) => setValue(event.target.value);
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    socket.on('messageResponse', (data) => {
+      console.log(data);
+    });
     console.log(user.nickname, ':', value);
     console.log(socket.id, ':', value);
-    socket.emit('sendChat', {
-      from_id: user.nickname,
-      msg: value,
-    });
+
     setValue('');
   };
 

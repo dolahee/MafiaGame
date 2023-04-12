@@ -59,7 +59,8 @@ export default function Chatting() {
         </Box>
 
         <Box sx={{ height: '100vh' }}>
-          {messages.map((message) => (
+          <Message />
+          {/* {messages.map((message) => (
             <Message
               key={message.id}
               msg={message.msg}
@@ -67,7 +68,7 @@ export default function Chatting() {
               fromId={message.fromId}
               toId={message.toId}
             />
-          ))}
+          ))} */}
         </Box>
         <Box
           sx={{

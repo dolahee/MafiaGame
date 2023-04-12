@@ -21,19 +21,21 @@ const useSocket = () => {
     // 타이머
     socket.on('timerSync', ({ ms }) => {});
 
-    // 메시지
-    socket.on('serverMessage', (msg) => {});
-
     // 게임시작
     socket.on('gameReadySync', (res) => {
       dispatch(setUserList(res));
     });
   }, []);
+
   // 유저 정보 저장
   socket.on('userListSync', (res) => {
     dispatch(setUserList(res));
   });
 
+  // 메시지
+  socket.on('messageResponse', (data) => {
+    console.log(data);
+  });
   return {};
 };
 
