@@ -4,23 +4,23 @@ import { useSelector } from 'react-redux';
 import { socket } from '../../utils/socket';
 
 export default function ProfileCard({ userId, userImg, userisReady }) {
-  const { timeStatus } = useSelector((state) => state.status);
   const { user } = useSelector((state) => state.user);
-  const { mySocketId, myJob, killedUserList, mafiaPickId } = useSelector(
+  const { playerList, gameStatus } = useSelector((state) => state.game);
+  const { myJob, mySocketId, killedUserList, mafiaPickId } = useSelector(
     (state) => state.room
   );
 
   const onClickKill = () => {
-    if (myJob === 'mafia' && timeStatus === 'night') {
-      socket.emit('mafiaVoted', { killed_id: userId, from_id: mySocketId });
+    if (playerList.length > 0) {
+      const myId = playerList.find(({ id }) => id === socket.id);
+      if (myId.job === 'mafia' && gameStatus === 'night') {
+        socket.emit('mafiaVoted', { killed_id: userId, from_id: mySocketId });
+      }
     }
   };
 
   const onClickVote = () => {
-    socket.emit('peopleVoted', {
-      from_id: mySocketId,
-      killed_id: userId,
-    });
+    console.log(userId);
   };
 
   return (
@@ -29,12 +29,12 @@ export default function ProfileCard({ userId, userImg, userisReady }) {
       spacing={1}
       direction="row"
       justifyContent="center"
-      sx={{ backgroundColor: timeStatus === 'night' ? `#2f2f2e` : `#F6F6F6` }}
+      sx={{ backgroundColor: gameStatus === 'night' ? `#2f2f2e` : `#F6F6F6` }}
     >
       <Grid item md={11}>
         <Paper
           sx={{
-            backgroundColor: timeStatus === 'night' ? `#2f2f2e` : `#943B3B`,
+            backgroundColor: gameStatus === 'night' ? `#2f2f2e` : `#943B3B`,
             display: 'flex',
             alignItems: 'center',
           }}
@@ -69,7 +69,7 @@ export default function ProfileCard({ userId, userImg, userisReady }) {
             ) : null}
             {userId === mafiaPickId &&
             myJob === 'mafia' &&
-            timeStatus === 'night' ? (
+            gameStatus === 'night' ? (
               <img
                 src="./images/killimg.png"
                 alt="killimg"
@@ -104,21 +104,26 @@ export default function ProfileCard({ userId, userImg, userisReady }) {
               </Typography>
             </Box>
           </Box>
-          {myJob === 'mafia' && timeStatus === 'night' && userId ? (
+
+          {myJob === 'mafia' && gameStatus === 'night' && userId ? (
             <Button color="secondary" variant="contained" onClick={onClickKill}>
-              선택
+              죽이기
             </Button>
           ) : null}
-          {timeStatus === 'dayVote' && userId ? (
+
+          {gameStatus === 'dayVote' && userId ? (
             <Button color="secondary" variant="contained" onClick={onClickVote}>
               투표
             </Button>
           ) : null}
-
-          {userisReady === true ? (
-            <Typography color="#FFFFF" variant="h7" ml={5}>
-              Ready
-            </Typography>
+          {gameStatus === 'end' ? (
+            <Box>
+              {userisReady === true ? (
+                <Typography color="#FFFFF" variant="h7" ml={5}>
+                  Ready
+                </Typography>
+              ) : null}
+            </Box>
           ) : null}
         </Paper>
       </Grid>

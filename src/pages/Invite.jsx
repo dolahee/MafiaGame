@@ -27,7 +27,8 @@ export default function Invite() {
   const img4 = '/images/RandomImg/img4.png';
   const img5 = '/images/RandomImg/img5.png';
   const img6 = '/images/RandomImg/img6.png';
-  const randomImgArr = [img0, img1, img2, img3, img4, img5, img6];
+  const img7 = '/images/RandomImg/img7.png';
+  const randomImgArr = [img0, img1, img2, img3, img4, img5, img6, img7];
   const randomIndexs = Math.floor(Math.random() * randomImgArr.length);
   const randomImgIndex = randomImgArr[randomIndexs];
   const [imgIndex, setImgindex] = useState(randomIndexs);

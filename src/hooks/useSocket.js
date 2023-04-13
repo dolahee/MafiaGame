@@ -5,6 +5,7 @@ import { socket } from '../utils/socket';
 import { setUserList } from '../store/modules/room';
 import { setUser } from '../store/modules/user';
 import { addMessage } from '../store/modules/message';
+import { setPlayerList, setTimeStatus, getTimer } from '../store/modules/game';
 
 const useSocket = () => {
   const dispatch = useDispatch();
@@ -26,18 +27,25 @@ const useSocket = () => {
     });
 
     // 타이머
-    socket.on('timerSync', ({ ms }) => {});
+    socket.on('timerSync', (ms) => {
+      console.log(ms, '초');
+      dispatch(getTimer(ms));
+    });
 
     // 게임시작
-    socket.on('gameReadySync', (res) => {
-      dispatch(setUserList(res));
+    socket.on('gameStartResponse', (playerList) => {
+      dispatch(setPlayerList(playerList));
+    });
+
+    socket.on('gameStatusSync', (gameStatus) => {
+      dispatch(setTimeStatus(gameStatus));
+    });
+    // 메시지
+    socket.on('messageResponse', (data) => {
+      dispatch(addMessage(data));
     });
   }, []);
 
-  // 메시지
-  socket.on('messageResponse', (data) => {
-    dispatch(addMessage(data));
-  });
   return {};
 };
 

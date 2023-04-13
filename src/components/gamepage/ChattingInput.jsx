@@ -5,8 +5,8 @@ import { socket } from '../../utils/socket';
 
 export default function ChattingInput() {
   const { timeStatus, myStatus } = useSelector((state) => state.status);
+  const { gameStatus } = useSelector((state) => state.game);
   const { finalistId, mySocketId } = useSelector((state) => state.room);
-  const { messages } = useSelector((state) => state.message);
   const [value, setValue] = useState('');
 
   const handleChange = (event) => {
@@ -15,7 +15,6 @@ export default function ChattingInput() {
   const handleSubmit = (event) => {
     socket.emit('messageRequest', { text: value });
     event.preventDefault();
-
     setValue('');
   };
 
@@ -42,7 +41,7 @@ export default function ChattingInput() {
       component="form"
       onSubmit={handleSubmit}
     >
-      {timeStatus === 'dayFinalVote' ? (
+      {gameStatus === 'dayFinalVote' ? (
         <>
           <Button
             variant="contained"

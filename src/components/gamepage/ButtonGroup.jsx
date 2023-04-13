@@ -36,6 +36,10 @@ export default function ButtonGroup() {
   const gameReady = () => {
     setIsReady(true);
     socket.emit('gameReadyRequest', true);
+  };
+
+  const gameStart = () => {
+    setIsReady(true);
     socket.emit('gameStartRequest', true);
   };
 
@@ -62,23 +66,43 @@ export default function ButtonGroup() {
       </Dialog>
 
       <Box m={1}>
-        <Button
-          ref={readyBtn}
-          variant="contained"
-          color="primary"
-          size="large"
-          sx={{
-            fontFamily: 'MaplestoryOTFBold',
-            '* .Mui_disabled': {
-              background: '#E38989',
+        {userList[0].id === socket.id ? (
+          <Button
+            ref={readyBtn}
+            variant="contained"
+            color="primary"
+            size="large"
+            sx={{
               fontFamily: 'MaplestoryOTFBold',
-            },
-          }}
-          onClick={gameReady}
-          disabled={isReadys}
-        >
-          {userList[0].id === socket.id ? 'Game START' : 'READY'}
-        </Button>
+              '* .Mui_disabled': {
+                background: '#E38989',
+                fontFamily: 'MaplestoryOTFBold',
+              },
+            }}
+            onClick={gameStart}
+            disabled={isReadys}
+          >
+            Game START
+          </Button>
+        ) : (
+          <Button
+            ref={readyBtn}
+            variant="contained"
+            color="primary"
+            size="large"
+            sx={{
+              fontFamily: 'MaplestoryOTFBold',
+              '* .Mui_disabled': {
+                background: '#E38989',
+                fontFamily: 'MaplestoryOTFBold',
+              },
+            }}
+            onClick={gameReady}
+            disabled={isReadys}
+          >
+            READY
+          </Button>
+        )}
       </Box>
       <Box m={1}>
         <Button

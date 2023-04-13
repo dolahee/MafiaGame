@@ -21,8 +21,8 @@ import Citizencard from '../components/gamepage/JobCard/Citizencard';
 export default function GamePage() {
   const navigate = useNavigate();
   const { timeStatus } = useSelector((state) => state.status);
-  const { userList, myJob } = useSelector((state) => state.room);
-  const { user } = useSelector((state) => state.user);
+  const { userList } = useSelector((state) => state.room);
+  const { playerList } = useSelector((state) => state.game);
   const [showMafiaCard, setShowMafiaCard] = useState(false);
   const [showCitizencardCard, setShowCitizencardCard] = useState(false);
   const [open, setOpen] = useState(false);
@@ -38,14 +38,19 @@ export default function GamePage() {
   }, []);
 
   // 직업 카드 배정 후 닫기
+
   useEffect(() => {
-    if (myJob === 'mafia') {
-      setShowMafiaCard(true);
+    if (playerList.length > 0) {
+      const myId = playerList.find(({ id }) => id === socket.id);
+      console.log(myId.job);
+      if (myId.job === 'mafia') {
+        setShowMafiaCard(true);
+      }
+      if (myId.job === 'citizen') {
+        setShowCitizencardCard(true);
+      }
     }
-    if (myJob === 'citizen') {
-      setShowCitizencardCard(true);
-    }
-  }, [myJob]);
+  }, [playerList]);
 
   const onCloseCard = useCallback(() => {
     setShowMafiaCard(false);
@@ -92,6 +97,7 @@ export default function GamePage() {
                 userId={usr.nickname}
                 userImg={usr.imgIdx}
                 userisReady={usr.isReady}
+                player={playerList[index]}
               />
             </Box>
           ))}
@@ -102,6 +108,7 @@ export default function GamePage() {
           <Chatting />
 
           {/* 직업 카드 배정 */}
+
           {showMafiaCard ? (
             <Box
               sx={{

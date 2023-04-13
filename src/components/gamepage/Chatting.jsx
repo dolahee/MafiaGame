@@ -9,12 +9,11 @@ import ChattingInput from './ChattingInput';
 import ButtonGroup from './ButtonGroup';
 
 export default function Chatting() {
-  const { gameStatus, timeStatus } = useSelector((state) => state.status);
+  const { gameStatus, timer } = useSelector((state) => state.game);
   const { messages } = useSelector((state) => state.message);
 
-  const [timer, setTimer] = useState(0);
   const boxRef = useRef();
-
+  console.log(gameStatus);
   useEffect(() => {
     boxRef.current.scrollTo({
       behavior: 'smooth',
@@ -27,7 +26,7 @@ export default function Chatting() {
       <GlobalStyle />
       <Box
         sx={{
-          backgroundColor: timeStatus === 'night' ? `#171717` : `#F6F6F6`,
+          backgroundColor: gameStatus === 'night' ? `#171717` : `#F6F6F6`,
           minHeight: '100vh',
           maxHeight: '100vh',
           overflowY: 'auto',
@@ -45,7 +44,7 @@ export default function Chatting() {
             alignItems: 'center',
           }}
         >
-          {gameStatus === 'wait' && timer === 0 ? null : (
+          {gameStatus === 'end' && timer === 0 ? null : (
             <Box
               sx={{
                 backgroundColor: '#A96262',
@@ -56,12 +55,13 @@ export default function Chatting() {
             </Box>
           )}
 
-          {gameStatus !== 'playing' && <ButtonGroup />}
+          {gameStatus !== 'end' ? null : <ButtonGroup />}
         </Box>
 
         <Box sx={{ height: '100vh' }}>
-          {messages.map((message) => (
+          {messages.map((message, index) => (
             <Message
+              key={index}
               sender={message.sender}
               text={message.text}
               type={message.type}

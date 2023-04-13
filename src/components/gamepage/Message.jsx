@@ -1,13 +1,16 @@
 import { Box } from '@mui/material';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { socket } from '../../utils/socket';
 
 export default function Message({ type, text, sender }) {
-  if (sender === socket.id) {
+  const { user } = useSelector((state) => state.user);
+
+  if (sender === user.nickname) {
     return (
       <Box sx={{ textAlign: 'right', mr: 3 }}>
         <Box sx={{ display: 'inline-block', textAlign: 'left' }}>
-          닉네임
+          {sender}
           <Box
             sx={{
               textAlign: 'center',
@@ -31,7 +34,7 @@ export default function Message({ type, text, sender }) {
     return (
       <Box sx={{ textAlign: 'left', ml: 3 }}>
         <Box sx={{ display: 'inline-block', textAlign: 'right' }}>
-          닉네임
+          {sender}
           <Box
             sx={{
               textAlign: 'center',
