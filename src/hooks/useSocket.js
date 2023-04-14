@@ -24,6 +24,7 @@ const useSocket = () => {
     });
 
     socket.on('createRoomResponse', (room) => {
+      console.log(room);
       navigate(`/gamepage/${room}`);
     });
 

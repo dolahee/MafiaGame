@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import '../styles/Chatting.css';
 import Message from './Message';
