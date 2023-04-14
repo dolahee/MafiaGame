@@ -2,7 +2,7 @@ const initState = {
   /** 방 번호 */
   roomID: '',
   /** 유저 목록 */
-  userList: ['', '', '', '', '', '', '', ''],
+  userList: [''],
   /** 유저 nickname 목록 */
   nameInRoom: [],
   /** 직업 목록 mafia 마피아 */

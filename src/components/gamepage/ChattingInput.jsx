@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { socket } from '../../utils/socket';
 
 export default function ChattingInput() {
-  const { timeStatus, myStatus } = useSelector((state) => state.status);
+  const { myStatus } = useSelector((state) => state.status);
   const { gameStatus } = useSelector((state) => state.game);
   const { finalistId, mySocketId } = useSelector((state) => state.room);
   const [value, setValue] = useState('');
@@ -18,8 +18,8 @@ export default function ChattingInput() {
     setValue('');
   };
 
-  if (timeStatus === 'dayFinal' && finalistId !== mySocketId) return null;
-  if (timeStatus === 'night') return null;
+  if (gameStatus === 'dayFinal' && finalistId !== mySocketId) return null;
+  if (gameStatus === 'night') return null;
   if (myStatus === 'dead') return null;
 
   const onClickYes = () => {
