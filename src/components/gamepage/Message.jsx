@@ -6,6 +6,38 @@ import { socket } from '../../utils/socket';
 export default function Message({ type, text, sender }) {
   const { user } = useSelector((state) => state.user);
 
+  if (type === 'userNotice') {
+    return (
+      <Box
+        sx={{
+          textAlign: 'center',
+          backgroundColor: '#E1E1E1',
+          width: '100%',
+          p: 1,
+          mb: 3,
+          borderRadius: '5px',
+        }}
+      >
+        {text}
+      </Box>
+    );
+  }
+  if (type === 'gameNotice') {
+    return (
+      <Box
+        sx={{
+          textAlign: 'center',
+          backgroundColor: '#FFA7A7',
+          width: '100%',
+          p: 1,
+          mb: 3,
+          borderRadius: '5px',
+        }}
+      >
+        {text}
+      </Box>
+    );
+  }
   if (sender === user.nickname) {
     return (
       <Box sx={{ textAlign: 'right', mr: 3 }}>

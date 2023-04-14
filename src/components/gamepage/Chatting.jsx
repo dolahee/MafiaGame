@@ -13,7 +13,6 @@ export default function Chatting() {
   const { messages } = useSelector((state) => state.message);
 
   const boxRef = useRef();
-  console.log(gameStatus);
   useEffect(() => {
     boxRef.current.scrollTo({
       behavior: 'smooth',

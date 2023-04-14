@@ -15,7 +15,6 @@ const useSocket = () => {
     // 방장 유저 정보 저장
     socket.on('saveUserInfoResponse', (user) => {
       dispatch(setUser(user));
-      console.log(user);
     });
 
     // 유저 정보 저장
