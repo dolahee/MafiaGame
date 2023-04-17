@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { socket } from '../../utils/socket';
 
@@ -7,24 +7,27 @@ export default function Message({ type, text, sender }) {
   const { user } = useSelector((state) => state.user);
   const { playerList } = useSelector((state) => state.game);
 
-  if (playerList.length > 0) {
-    const myId = playerList.find(({ id }) => id === socket.id);
-    if (type === 'mafiaChat' && myId.job === 'mafia') {
-      return (
-        <Box
-          sx={{
-            textAlign: 'center',
-            backgroundColor: '#E1E1E1',
-            width: '100%',
-            p: 1,
-            mb: 3,
-            borderRadius: '5px',
-          }}
-        >
-          {text}
-        </Box>
-      );
-    }
+  const myStatus = useMemo(
+    () => playerList.find((player) => player.id === socket.id),
+
+    [playerList]
+  );
+
+  if (type === 'mafiaChat' && myStatus.job === 'mafia') {
+    return (
+      <Box
+        sx={{
+          textAlign: 'center',
+          backgroundColor: '#E1E1E1',
+          width: '100%',
+          p: 1,
+          mb: 3,
+          borderRadius: '5px',
+        }}
+      >
+        {text}
+      </Box>
+    );
   }
 
   if (type === 'userNotice') {

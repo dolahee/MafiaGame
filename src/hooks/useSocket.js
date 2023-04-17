@@ -19,18 +19,15 @@ const useSocket = () => {
 
     // 유저 정보 저장
     socket.on('userListSync', (res) => {
-      console.log(res);
       dispatch(setUserList(res));
     });
 
     socket.on('createRoomResponse', (room) => {
-      console.log(room);
       navigate(`/gamepage/${room}`);
     });
 
     // 타이머
     socket.on('timerSync', (ms) => {
-      console.log(ms, '초');
       dispatch(getTimer(ms));
     });
 

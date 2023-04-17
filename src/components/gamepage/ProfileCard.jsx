@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { Box, Button, Grid, Paper, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
-import KillButton from './KillButton';
+import { socket } from '../../utils/socket';
 
 export default function ProfileCard({
   userId,
@@ -11,14 +11,30 @@ export default function ProfileCard({
 }) {
   const { user } = useSelector((state) => state.user);
   const { gameStatus } = useSelector((state) => state.game);
-  const { myJob, killedUserList, mafiaPickId } = useSelector(
-    (state) => state.room
-  );
   const { playerList } = useSelector((state) => state.game);
-
-  const onClickVote = () => {
-    console.log(userId);
+  const [value, setValue] = useState('');
+  const onClickKill = () => {
+    setValue(userId);
+    socket.emit('messageRequest', { text: value + ' 님을 죽입니다.' });
+    if (playerList.length > 0) {
+      const myId = playerList.find(({ id }) => id === socket.id);
+      if (myId.job === 'mafia' && gameStatus === 'night') {
+        socket.emit('mafiaTargetRequest', userSocketId);
+      }
+    }
   };
+  const onClickVote = () => {};
+
+  const myStatus = useMemo(
+    () => playerList.find((player) => player.id === socket.id),
+
+    [playerList]
+  );
+
+  const status = useMemo(
+    () => playerList.find((playerStatus) => playerStatus.status === 'dead'),
+    [playerList]
+  );
 
   return (
     <Grid
@@ -43,7 +59,7 @@ export default function ProfileCard({
               borderRadius: '3px',
             }}
           >
-            {playerList.includes(userId) ? (
+            {myStatus?.status === 'dead' ? (
               <Box
                 sx={{
                   width: '100px',
@@ -63,19 +79,6 @@ export default function ProfileCard({
                   }}
                 />
               </Box>
-            ) : null}
-
-            {userId === mafiaPickId &&
-            myJob === 'mafia' &&
-            gameStatus === 'night' ? (
-              <img
-                src="./images/killimg.png"
-                alt="killimg"
-                style={{
-                  width: '100px',
-                  height: '100px',
-                }}
-              />
             ) : null}
 
             <img
@@ -102,8 +105,11 @@ export default function ProfileCard({
               </Typography>
             </Box>
           </Box>
-          {gameStatus === 'night' && userId ? (
-            <KillButton userNickname={userId} userSocketId={userSocketId} />
+
+          {gameStatus === 'night' && myStatus?.job === 'mafia' && userId ? (
+            <Button color="secondary" variant="contained" onClick={onClickKill}>
+              죽이기
+            </Button>
           ) : null}
 
           {gameStatus === 'dayVote' && userId ? (
