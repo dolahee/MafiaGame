@@ -96,6 +96,7 @@ export default function GamePage() {
               <ProfileCard
                 userId={usr.nickname}
                 userImg={usr.imgIdx}
+                userSocketId={usr.id}
                 userisReady={usr.isReady}
                 player={playerList[index]}
               />

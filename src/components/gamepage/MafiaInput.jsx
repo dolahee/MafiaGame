@@ -1,64 +1,67 @@
 import { Box, Button, TextField } from '@mui/material';
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router';
 import { socket } from '../../utils/socket';
 
-export default function MafiaText() {
-  const { state: roomID } = useLocation();
-  const { timeStatus } = useSelector((state) => state.status);
-  const { jobList, myJob, userList } = useSelector((state) => state.room);
-  const onlyMafia = userList.length <= 5; // userList.length <=5 면 mafia 한 명(true)
-  const DMInput = useRef();
+export default function MafiaInput() {
+  const { myStatus } = useSelector((state) => state.status);
+  const { gameStatus } = useSelector((state) => state.game);
+  const { playerList } = useSelector((state) => state.game);
+  const [value, setValue] = useState('');
 
-  const handleSubmit = () => {
-    socket.emit('sendDM', {
-      roomID,
-      from_id: socket.id,
-      to_id:
-        userList.filter(
-          (e, i) => e !== socket.id && jobList[i] === 'mafia'
-        )[0] || socket.id,
-      msg: DMInput.current.value,
-    });
-  };
-  const enterSubmit = (e) => {
-    if (e.key === 'Enter') handleSubmit();
-  };
+  if (gameStatus !== 'night') return null;
+  if (myStatus === 'dead') return null;
 
-  if (myJob !== 'mafia' || timeStatus !== 'night') {
-    return null;
+  if (playerList.length > 0) {
+    const myId = playerList.find(({ id }) => id === socket.id);
+    if (myId.job !== 'mafia') {
+      return null;
+    }
   }
 
+  if (playerList.length > 0) {
+    const myId = playerList.find(({ id }) => id === socket.id);
+    if (myId.status !== 'alive') {
+      return null;
+    }
+  }
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+  const handleSubmit = (event) => {
+    socket.emit('messageRequest', { text: value });
+    event.preventDefault();
+    setValue('');
+  };
   return (
     <Box
       sx={{
         display: 'flex',
         backgroundColor: 'white',
         justifyContent: 'center',
-        width: '900px',
+        width: '100%',
       }}
+      component="form"
+      onSubmit={handleSubmit}
     >
       <TextField
-        // value={value}
-        id="outlined-basic"
-        label=""
-        inputRef={DMInput}
-        variant="outlined"
-        sx={{ width: '100%' }}
-        // onChange={handleChange}
-        onKeyDown={enterSubmit}
-        disabled={onlyMafia}
-        placeholder={
-          onlyMafia
-            ? 'CHOOSE ONE TO KILL'
-            : 'ONLY MAFIA can send a message during the NIGHT'
-        }
+        value={value}
+        sx={{ width: '100%', fontFamily: 'MaplestoryOTFBold' }}
+        onChange={handleChange}
+        placeholder="마피아는 죽일 사람을 같은 마피아와 함께 상의해서 골라 주세요"
       />
       <Button
+        type="submit"
         variant="contained"
-        sx={{ backgroundColor: '#940404' }}
-        onClick={handleSubmit}
+        color="primary"
+        sx={{
+          height: '100%',
+          alignItems: 'center',
+          fontFamily: 'MaplestoryOTFBold',
+          position: 'absolute',
+          right: 0,
+        }}
       >
         전송
       </Button>

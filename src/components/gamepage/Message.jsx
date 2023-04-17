@@ -5,6 +5,27 @@ import { socket } from '../../utils/socket';
 
 export default function Message({ type, text, sender }) {
   const { user } = useSelector((state) => state.user);
+  const { playerList } = useSelector((state) => state.game);
+
+  if (playerList.length > 0) {
+    const myId = playerList.find(({ id }) => id === socket.id);
+    if (type === 'mafiaChat' && myId.job === 'mafia') {
+      return (
+        <Box
+          sx={{
+            textAlign: 'center',
+            backgroundColor: '#E1E1E1',
+            width: '100%',
+            p: 1,
+            mb: 3,
+            borderRadius: '5px',
+          }}
+        >
+          {text}
+        </Box>
+      );
+    }
+  }
 
   if (type === 'userNotice') {
     return (
@@ -38,7 +59,7 @@ export default function Message({ type, text, sender }) {
       </Box>
     );
   }
-  if (sender === user.nickname) {
+  if (sender === user.nickname && type === 'userChat') {
     return (
       <Box sx={{ textAlign: 'right', mr: 3 }}>
         <Box sx={{ display: 'inline-block', textAlign: 'left' }}>

@@ -48,6 +48,15 @@ const useSocket = () => {
       console.log(data);
       dispatch(addMessage(data));
     });
+
+    //
+
+    socket.on('playerListSync', (playerList) => {
+      dispatch(setPlayerList(playerList));
+    });
+    socket.on('targetPlayerSync', (kill) => {
+      console.log(kill);
+    });
   }, []);
 
   return {};

@@ -1,23 +1,20 @@
 import React from 'react';
 import { Box, Button, Grid, Paper, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { socket } from '../../utils/socket';
+import KillButton from './KillButton';
 
-export default function ProfileCard({ userId, userImg, userisReady }) {
+export default function ProfileCard({
+  userId,
+  userImg,
+  userisReady,
+  userSocketId,
+}) {
   const { user } = useSelector((state) => state.user);
-  const { playerList, gameStatus } = useSelector((state) => state.game);
-  const { myJob, mySocketId, killedUserList, mafiaPickId } = useSelector(
+  const { gameStatus } = useSelector((state) => state.game);
+  const { myJob, killedUserList, mafiaPickId } = useSelector(
     (state) => state.room
   );
-
-  const onClickKill = () => {
-    if (playerList.length > 0) {
-      const myId = playerList.find(({ id }) => id === socket.id);
-      if (myId.job === 'mafia' && gameStatus === 'night') {
-        socket.emit('mafiaVoted', { killed_id: userId, from_id: mySocketId });
-      }
-    }
-  };
+  const { playerList } = useSelector((state) => state.game);
 
   const onClickVote = () => {
     console.log(userId);
@@ -46,7 +43,7 @@ export default function ProfileCard({ userId, userImg, userisReady }) {
               borderRadius: '3px',
             }}
           >
-            {killedUserList.includes(userId) ? (
+            {playerList.includes(userId) ? (
               <Box
                 sx={{
                   width: '100px',
@@ -67,6 +64,7 @@ export default function ProfileCard({ userId, userImg, userisReady }) {
                 />
               </Box>
             ) : null}
+
             {userId === mafiaPickId &&
             myJob === 'mafia' &&
             gameStatus === 'night' ? (
@@ -104,11 +102,8 @@ export default function ProfileCard({ userId, userImg, userisReady }) {
               </Typography>
             </Box>
           </Box>
-
-          {myJob === 'mafia' && gameStatus === 'night' && userId ? (
-            <Button color="secondary" variant="contained" onClick={onClickKill}>
-              죽이기
-            </Button>
+          {gameStatus === 'night' && userId ? (
+            <KillButton userNickname={userId} userSocketId={userSocketId} />
           ) : null}
 
           {gameStatus === 'dayVote' && userId ? (
