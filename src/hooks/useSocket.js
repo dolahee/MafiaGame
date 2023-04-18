@@ -34,7 +34,6 @@ const useSocket = () => {
     // 게임시작
     socket.on('gameStartResponse', (playerList) => {
       dispatch(setPlayerList(playerList));
-      console.log(playerList);
     });
 
     socket.on('gameStatusSync', (gameStatus) => {
@@ -42,7 +41,6 @@ const useSocket = () => {
     });
     // 메시지
     socket.on('messageResponse', (data) => {
-      console.log(data);
       dispatch(addMessage(data));
     });
 

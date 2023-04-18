@@ -29,11 +29,11 @@ export default function ChattingInput() {
   }
 
   const onClickYes = () => {
-    socket.emit('finalVote', { from_id: mySocketId, agree: true });
+    socket.emit('playerVoteRequest', true);
   };
 
   const onClickNo = () => {
-    socket.emit('finalVote', { from_id: mySocketId, agree: false });
+    socket.emit('playerVoteRequest', false);
   };
 
   return (

@@ -59,5 +59,6 @@
     "eslint-plugin-import": "^2.27.5",
     "gh-pages": "^5.0.0",
     "prettier": "^2.8.4"
-  }
+  },
+  "homepage": "http://dolahee.github.io/MafiaGame"
 }

@@ -42,7 +42,7 @@ export default function GamePage() {
   useEffect(() => {
     if (playerList.length > 0) {
       const myId = playerList.find(({ id }) => id === socket.id);
-      console.log(myId.job);
+
       if (myId.job === 'mafia') {
         setShowMafiaCard(true);
       }
