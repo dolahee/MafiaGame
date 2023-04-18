@@ -5,7 +5,7 @@ const initalState = {
   gameStatus: 'end',
   /** 게임 타이머 */
   timer: 0,
-
+  /** 투표 받은 사람 */
   vote: '',
 };
 

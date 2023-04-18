@@ -13,7 +13,7 @@ export default function Message({ type, text, sender }) {
     [playerList]
   );
 
-  if (type === 'mafiaChat' && myStatus.job === 'mafia') {
+  if (type === 'mafiaChat' && myStatus?.job === 'mafia') {
     return (
       <Box
         sx={{
