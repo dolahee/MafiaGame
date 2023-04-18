@@ -42,7 +42,6 @@ export default function GamePage() {
   useEffect(() => {
     if (playerList.length > 0) {
       const myId = playerList.find(({ id }) => id === socket.id);
-
       if (myId.job === 'mafia') {
         setShowMafiaCard(true);
       }
@@ -105,7 +104,7 @@ export default function GamePage() {
         </Paper>
       </Grid>
       <Grid item md={8}>
-        <Paper sx={{ height: '100vh', overflowY: 'auto' }}>
+        <Paper sx={{ height: '100vh', overflowY: 'auto', width: '100%' }}>
           <Chatting />
 
           {/* 직업 카드 배정 */}

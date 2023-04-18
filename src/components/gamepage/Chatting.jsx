@@ -23,11 +23,12 @@ export default function Chatting() {
   return (
     <>
       <GlobalStyle />
+
       <Box
         sx={{
           backgroundColor: gameStatus === 'night' ? `#171717` : `#F6F6F6`,
-          minHeight: '100vh',
-          maxHeight: '100vh',
+          minHeight: '90vh',
+          maxHeight: '90vh',
           overflowY: 'auto',
           fontFamily: 'MaplestoryOTFBold',
           zIndex: 10000,
@@ -57,7 +58,7 @@ export default function Chatting() {
           {gameStatus !== 'end' ? null : <ButtonGroup />}
         </Box>
 
-        <Box sx={{ height: '100vh' }}>
+        <Box>
           {messages.map((message, index) => (
             <Message
               key={index}
@@ -70,15 +71,14 @@ export default function Chatting() {
         <Box
           sx={{
             position: 'fixed',
-            width: '50%',
-            bottom: 0,
+            width: '65vw',
+            bottom: 10,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
           }}
         >
           <ChattingInput />
-
           <MafiaInput />
         </Box>
       </Box>

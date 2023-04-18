@@ -16,7 +16,7 @@ export default function ProfileCard({
   const [value, setValue] = useState('');
   const onClickKill = () => {
     setValue(userId);
-    socket.emit('messageRequest', { text: value + ' 님을 죽입니다.' });
+    socket.emit('messageRequest', { text: `${value}  님을 죽입니다.` });
     if (playerList.length > 0) {
       const myId = playerList.find(({ id }) => id === socket.id);
       if (myId.job === 'mafia' && gameStatus === 'night') {
@@ -27,7 +27,6 @@ export default function ProfileCard({
 
   const onClickVote = () => {
     socket.emit('playerTargetRequest', userSocketId);
-    console.log(userSocketId);
   };
 
   const myStatus = useMemo(
@@ -109,6 +108,7 @@ export default function ProfileCard({
 
           {gameStatus === 'night' &&
           myStatus?.job === 'mafia' &&
+          myStatus.status === 'alive' &&
           player?.status === 'alive' &&
           userId ? (
             <Box Box ml={1}>

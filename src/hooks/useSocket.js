@@ -5,7 +5,12 @@ import { socket } from '../utils/socket';
 import { setUserList } from '../store/modules/room';
 import { setUser } from '../store/modules/user';
 import { addMessage } from '../store/modules/message';
-import { setPlayerList, setTimeStatus, getTimer } from '../store/modules/game';
+import {
+  setPlayerList,
+  setTimeStatus,
+  getTimer,
+  getVote,
+} from '../store/modules/game';
 
 const useSocket = () => {
   const dispatch = useDispatch();
@@ -51,6 +56,7 @@ const useSocket = () => {
     });
     socket.on('targetPlayerSync', (kill) => {
       console.log(kill);
+      dispatch(getVote(kill));
     });
   }, []);
 

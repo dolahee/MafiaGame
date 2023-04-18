@@ -4,8 +4,7 @@ import { useSelector } from 'react-redux';
 import { socket } from '../../utils/socket';
 
 export default function ChattingInput() {
-  const { gameStatus } = useSelector((state) => state.game);
-  const { finalistId, mySocketId } = useSelector((state) => state.room);
+  const { gameStatus, vote } = useSelector((state) => state.game);
   const [value, setValue] = useState('');
   const { playerList } = useSelector((state) => state.game);
 
@@ -18,7 +17,6 @@ export default function ChattingInput() {
     setValue('');
   };
 
-  if (gameStatus === 'dayFinal' && finalistId !== mySocketId) return null;
   if (gameStatus === 'night') return null;
 
   if (playerList.length > 0) {
@@ -27,6 +25,10 @@ export default function ChattingInput() {
       return null;
     }
   }
+
+  if (gameStatus === 'dayFinal' && vote !== socket.id) return null;
+  console.log(vote);
+  console.log(socket.id);
 
   const onClickYes = () => {
     socket.emit('playerVoteRequest', true);
@@ -76,17 +78,15 @@ export default function ChattingInput() {
         sx={{ width: '100%', fontFamily: 'MaplestoryOTFBold' }}
         onChange={handleChange}
       />
-
       <Button
         type="submit"
         variant="contained"
         color="primary"
         sx={{
           height: '100%',
-          alignItems: 'center',
+          right: 0,
           fontFamily: 'MaplestoryOTFBold',
           position: 'absolute',
-          right: 0,
         }}
       >
         전송

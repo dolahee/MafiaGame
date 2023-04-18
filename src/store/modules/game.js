@@ -5,11 +5,14 @@ const initalState = {
   gameStatus: 'end',
   /** 게임 타이머 */
   timer: 0,
+
+  vote: '',
 };
 
 const SET_PLAYER_LIST = ' SET_PLAYER_LIST';
 const SET_GAME_STATUS = 'SET_GAME_STATUS';
 const GET_TIMER = 'GET_TIMER';
+const GET_VOTE = 'GET_VOTE';
 
 export const setPlayerList = (playerList) => ({
   type: SET_PLAYER_LIST,
@@ -26,6 +29,11 @@ export const getTimer = (timer) => ({
   payload: { timer },
 });
 
+export const getVote = (vote) => ({
+  type: GET_VOTE,
+  payload: { vote },
+});
+
 const GameReducer = (state = initalState, action) => {
   switch (action.type) {
     case SET_PLAYER_LIST:
@@ -34,6 +42,8 @@ const GameReducer = (state = initalState, action) => {
       return { ...state, gameStatus: action.payload.gameStatus };
     case GET_TIMER:
       return { ...state, timer: action.payload.timer };
+    case GET_VOTE:
+      return { ...state, vote: action.payload.vote };
     default:
       return state;
   }
