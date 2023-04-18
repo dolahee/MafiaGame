@@ -55,7 +55,6 @@ const useSocket = () => {
       dispatch(setPlayerList(playerList));
     });
     socket.on('targetPlayerSync', (kill) => {
-      console.log(kill);
       dispatch(getVote(kill));
     });
   }, []);

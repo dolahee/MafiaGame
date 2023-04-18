@@ -27,8 +27,6 @@ export default function ChattingInput() {
   }
 
   if (gameStatus === 'dayFinal' && vote !== socket.id) return null;
-  console.log(vote);
-  console.log(socket.id);
 
   const onClickYes = () => {
     socket.emit('playerVoteRequest', true);
