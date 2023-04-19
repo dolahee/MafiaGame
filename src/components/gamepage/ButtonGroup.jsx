@@ -58,11 +58,8 @@ export default function ButtonGroup() {
       {/* 주소 복사 완료 다이얼로그 */}
       {showDialog && (
         <Dialog open={copy} onClose={handleClick}>
-          <DialogTitle>주소 복사 완료</DialogTitle>
+          <DialogTitle> 아래의 주소를 복사해서 친구를 초대하세요</DialogTitle>
           <DialogContent>
-            <Typography variant="body1">
-              아래의 주소를 복사해서 친구를 초대하세요
-            </Typography>
             <TextField
               sx={{ width: '100%' }}
               type="text"
