@@ -20,12 +20,19 @@ export default function ButtonGroup() {
   const navigate = useNavigate();
   // 버튼 클릭 시 페이지 주소가 복사 됨
   const [copy, setcopy] = useState(false);
-  const [url, setUrl] = useState(window.location.href);
-
+  // const [url, setUrl] = useState(window.location.href);
+  const addressInputRef = useRef(null);
+  const handleButtonClick = () => {
+    const currentAddress = window.location.href;
+    const url = `${currentAddress}/Invite`;
+    if (addressInputRef.current) {
+      addressInputRef.current.value = url;
+    }
+  };
   const inviteFriends = () => {
-    const modifiedUrl = `${url}/Invite`;
-    navigator.clipboard.writeText(modifiedUrl);
-    console.log(setUrl);
+    // const modifiedUrl = `${url}/Invite`;
+    // navigator.clipboard.writeText(modifiedUrl);
+    // console.log(setUrl);
     setcopy(true);
   };
   const handleClose = () => {
@@ -56,7 +63,11 @@ export default function ButtonGroup() {
         <DialogTitle>주소 복사 완료</DialogTitle>
         <DialogContent>
           <Typography variant="body1">
-            친구를 초대해서 게임을 즐겨보세요.
+            아래의 주소를 복사해서 친구를 초대하세요
+          </Typography>
+          <Typography variant="body1">
+            <Button onClick={handleButtonClick}> 초대하기 </Button>
+            <input type="text" ref={addressInputRef} />
           </Typography>
         </DialogContent>
         <DialogActions>
