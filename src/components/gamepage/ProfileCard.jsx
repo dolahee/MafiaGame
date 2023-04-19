@@ -13,7 +13,7 @@ export default function ProfileCard({
   const { user } = useSelector((state) => state.user);
   const { gameStatus } = useSelector((state) => state.game);
   const { playerList } = useSelector((state) => state.game);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(userId);
   const onClickKill = () => {
     setValue(userId);
     socket.emit('messageRequest', { text: `${value}  님을 죽입니다.` });

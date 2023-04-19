@@ -22,7 +22,7 @@ export default function GamePage() {
   const navigate = useNavigate();
   const { timeStatus } = useSelector((state) => state.status);
   const { userList } = useSelector((state) => state.room);
-  const { playerList } = useSelector((state) => state.game);
+  const { playerList, gameStatus } = useSelector((state) => state.game);
   const [showMafiaCard, setShowMafiaCard] = useState(false);
   const [showCitizencardCard, setShowCitizencardCard] = useState(false);
   const [open, setOpen] = useState(false);
@@ -42,10 +42,10 @@ export default function GamePage() {
   useEffect(() => {
     if (playerList.length > 0) {
       const myId = playerList.find(({ id }) => id === socket.id);
-      if (myId.job === 'mafia') {
+      if (myId.job === 'mafia' && gameStatus !== 'night') {
         setShowMafiaCard(true);
       }
-      if (myId.job === 'citizen') {
+      if (myId.job === 'citizen' && gameStatus !== 'night') {
         setShowCitizencardCard(true);
       }
     }

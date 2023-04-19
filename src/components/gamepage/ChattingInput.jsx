@@ -7,6 +7,8 @@ export default function ChattingInput() {
   const { gameStatus, vote } = useSelector((state) => state.game);
   const [value, setValue] = useState('');
   const { playerList } = useSelector((state) => state.game);
+  const [yseBtn, setYseBtn] = useState('');
+  const [noBtn, setnoBtn] = useState('');
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -28,12 +30,24 @@ export default function ChattingInput() {
 
   if (gameStatus === 'dayFinal' && vote !== socket.id) return null;
 
+  // const onClickYes = () => {
+  //   socket.emit('playerVoteRequest', true);
+  // };
+
+  // const onClickNo = () => {
+  //   socket.emit('playerVoteRequest', false);
+  // };
+
   const onClickYes = () => {
     socket.emit('playerVoteRequest', true);
+    setYseBtn('pink');
+    setnoBtn('');
   };
 
   const onClickNo = () => {
     socket.emit('playerVoteRequest', false);
+    setYseBtn('');
+    setnoBtn('pink');
   };
 
   return (
@@ -49,20 +63,10 @@ export default function ChattingInput() {
     >
       {gameStatus === 'dayFinalVote' ? (
         <>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ m: 1 }}
-            onClick={onClickYes}
-          >
+          <Button style={{ backgroundColor: yseBtn }} onClick={onClickYes}>
             찬성
           </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ m: 1 }}
-            onClick={onClickNo}
-          >
+          <Button style={{ backgroundColor: noBtn }} onClick={onClickNo}>
             반대
           </Button>
         </>
