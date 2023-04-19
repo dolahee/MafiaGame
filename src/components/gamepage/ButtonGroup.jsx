@@ -5,6 +5,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  TextField,
   Typography,
 } from '@mui/material';
 import React, { useRef, useState } from 'react';
@@ -20,19 +21,15 @@ export default function ButtonGroup() {
   const navigate = useNavigate();
   // 버튼 클릭 시 페이지 주소가 복사 됨
   const [copy, setcopy] = useState(false);
-  // const [url, setUrl] = useState(window.location.href);
-  const addressInputRef = useRef(null);
-  const handleButtonClick = () => {
-    const currentAddress = window.location.href;
-    const url = `${currentAddress}/Invite`;
-    if (addressInputRef.current) {
-      addressInputRef.current.value = url;
-    }
-  };
-  const inviteFriends = () => {
-    // const modifiedUrl = `${url}/Invite`;
+  const [url, setUrl] = useState(window.location.href);
+
+  const [showDialog, setShowDialog] = useState(false);
+  const modifiedUrl = `${url}/Invite`;
+  const handleClick = () => {
     // navigator.clipboard.writeText(modifiedUrl);
     // console.log(setUrl);
+
+    setShowDialog(true);
     setcopy(true);
   };
   const handleClose = () => {
@@ -59,23 +56,27 @@ export default function ButtonGroup() {
       }}
     >
       {/* 주소 복사 완료 다이얼로그 */}
-      <Dialog open={copy} onClose={inviteFriends}>
-        <DialogTitle>주소 복사 완료</DialogTitle>
-        <DialogContent>
-          <Typography variant="body1">
-            아래의 주소를 복사해서 친구를 초대하세요
-          </Typography>
-          <Typography variant="body1">
-            <Button onClick={handleButtonClick}> 초대하기 </Button>
-            <input type="text" ref={addressInputRef} />
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            OK
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {showDialog && (
+        <Dialog open={copy} onClose={handleClick}>
+          <DialogTitle>주소 복사 완료</DialogTitle>
+          <DialogContent>
+            <Typography variant="body1">
+              아래의 주소를 복사해서 친구를 초대하세요
+            </Typography>
+            <TextField
+              sx={{ width: '100%' }}
+              type="text"
+              value={modifiedUrl}
+              readOnly
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary" autoFocus>
+              OK
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
 
       <Box m={1}>
         {userList[0].id === socket.id ? (
@@ -121,7 +122,7 @@ export default function ButtonGroup() {
           variant="contained"
           color="primary"
           size="large"
-          onClick={inviteFriends}
+          onClick={handleClick}
           sx={{ fontFamily: 'MaplestoryOTFBold', fontWeight: 'bolder' }}
         >
           초대하기
