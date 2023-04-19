@@ -42,6 +42,7 @@ const useSocket = () => {
     });
 
     socket.on('gameStatusSync', (gameStatus) => {
+      console.log(gameStatus);
       dispatch(setTimeStatus(gameStatus));
     });
     // 메시지

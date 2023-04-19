@@ -25,6 +25,7 @@ export default function ButtonGroup() {
   const inviteFriends = () => {
     const modifiedUrl = `${url}/Invite`;
     navigator.clipboard.writeText(modifiedUrl);
+    console.log(setUrl);
     setcopy(true);
   };
   const handleClose = () => {
