@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
 
-export const socket = io('http://knsan189.iptime.org:4001/', {
+export const socket = io('https://mafia-server.bok2.kr', {
   cors: { origin: '*' },
   transports: ['websocket'],
 });

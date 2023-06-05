@@ -26,8 +26,8 @@ export default function ButtonGroup() {
   const [showDialog, setShowDialog] = useState(false);
   const modifiedUrl = `${url}/Invite`;
   const handleClick = () => {
-    // navigator.clipboard.writeText(modifiedUrl);
-    // console.log(setUrl);
+    navigator.clipboard.writeText(modifiedUrl);
+    console.log(setUrl);
 
     setShowDialog(true);
     setcopy(true);
@@ -58,15 +58,8 @@ export default function ButtonGroup() {
       {/* 주소 복사 완료 다이얼로그 */}
       {showDialog && (
         <Dialog open={copy} onClose={handleClick}>
-          <DialogTitle> 아래의 주소를 복사해서 친구를 초대하세요</DialogTitle>
-          <DialogContent>
-            <TextField
-              sx={{ width: '100%' }}
-              type="text"
-              value={modifiedUrl}
-              readOnly
-            />
-          </DialogContent>
+          <DialogTitle> 친구를 초대해서 게임을 즐겨 보세요 </DialogTitle>
+          <DialogContent>링크 복사 완료! </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary" autoFocus>
               OK
