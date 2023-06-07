@@ -27,7 +27,6 @@ export default function ButtonGroup() {
   const modifiedUrl = `${url}/Invite`;
   const handleClick = () => {
     navigator.clipboard.writeText(modifiedUrl);
-    console.log(setUrl);
 
     setShowDialog(true);
     setcopy(true);
